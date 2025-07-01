@@ -1,0 +1,690 @@
+<!-- Photo Gallery Section -->
+<style>
+    /* Gallery Section Styles */
+    .gallery-section {
+        position: relative;
+        padding: 120px 0;
+        background: #fafaf8;
+        overflow: hidden;
+    }
+    
+    /* Gallery Header */
+    .gallery-header {
+        text-align: center;
+        margin-bottom: 100px;
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    
+    .gallery-header.visible {
+        opacity: 1;
+        transform: translateY(0);
+        transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    
+    .gallery-title {
+        font-family: 'Editorial New', serif;
+        font-size: clamp(3rem, 6vw, 5rem);
+        font-weight: 300;
+        color: #0a0a0a;
+        letter-spacing: -0.02em;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+    
+    .gallery-title span {
+        display: inline-block;
+        transform: translateY(100%);
+        transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    
+    .gallery-header.visible .gallery-title span {
+        transform: translateY(0);
+    }
+    
+    .gallery-subtitle {
+        font-family: 'Satoshi', sans-serif;
+        font-size: 0.875rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #666;
+        opacity: 0;
+        transition: opacity 1s ease 0.5s;
+    }
+    
+    .gallery-header.visible .gallery-subtitle {
+        opacity: 1;
+    }
+    
+    /* Gallery Container */
+    .gallery-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 60px;
+        position: relative;
+    }
+    
+    /* Gallery Grid - Masonry Style */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-auto-rows: 280px;
+        gap: 30px;
+        position: relative;
+    }
+    
+    /* Gallery Items with Different Sizes */
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        opacity: 0;
+        transform: scale(0.9) translateY(30px);
+        transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        background: #000;
+    }
+    
+    .gallery-item.visible {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    
+    /* Grid Positioning for 7 items */
+    .gallery-item:nth-child(1) {
+        grid-column: span 6;
+        grid-row: span 2;
+    }
+    
+    .gallery-item:nth-child(2) {
+        grid-column: span 3;
+        grid-row: span 1;
+    }
+    
+    .gallery-item:nth-child(3) {
+        grid-column: span 3;
+        grid-row: span 1;
+    }
+    
+    .gallery-item:nth-child(4) {
+        grid-column: span 3;
+        grid-row: span 2;
+    }
+    
+    .gallery-item:nth-child(5) {
+        grid-column: span 3;
+        grid-row: span 1;
+    }
+    
+    .gallery-item:nth-child(6) {
+        grid-column: span 6;
+        grid-row: span 1;
+    }
+    
+    .gallery-item:nth-child(7) {
+        grid-column: span 6;
+        grid-row: span 2;
+    }
+    
+    /* Image Container */
+    .gallery-image {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    .gallery-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1);
+        transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), filter 0.6s ease;
+    }
+    
+    .gallery-item:hover .gallery-image img {
+        transform: scale(1.1);
+        filter: brightness(0.4);
+    }
+    
+    /* Content Overlay with Details */
+    .gallery-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        background: linear-gradient(to top, 
+            rgba(0,0,0,0.9) 0%, 
+            rgba(0,0,0,0.6) 30%,
+            rgba(0,0,0,0.3) 60%,
+            rgba(0,0,0,0) 100%);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    
+    .gallery-item:hover .gallery-content {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .gallery-label {
+        font-family: 'Satoshi', sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: #c9a961;
+        margin-bottom: 15px;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.6s ease 0.1s;
+    }
+    
+    .gallery-item:hover .gallery-label {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .gallery-description {
+        font-family: 'Editorial New', serif;
+        font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+        font-weight: 300;
+        color: white;
+        line-height: 1.3;
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.6s ease 0.2s;
+    }
+    
+    .gallery-item:hover .gallery-description {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .gallery-details {
+        font-family: 'Satoshi', sans-serif;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.8);
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.6s ease 0.3s;
+    }
+    
+    .gallery-item:hover .gallery-details {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .gallery-details ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .gallery-details li {
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 8px;
+    }
+    
+    .gallery-details li::before {
+        content: '•';
+        position: absolute;
+        left: 0;
+        color: #c9a961;
+    }
+    
+    /* Reveal Line Animation */
+    .reveal-line {
+        position: absolute;
+        background: #c9a961;
+        z-index: 4;
+        transform-origin: left;
+        opacity: 0;
+        animation: revealLine 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    }
+    
+    .gallery-item:nth-child(odd) .reveal-line {
+        width: 100%;
+        height: 2px;
+        top: 0;
+        left: 0;
+    }
+    
+    .gallery-item:nth-child(even) .reveal-line {
+        width: 2px;
+        height: 100%;
+        top: 0;
+        right: 0;
+        transform-origin: top;
+    }
+    
+    @keyframes revealLine {
+        0% { opacity: 1; transform: scaleX(0); }
+        50% { opacity: 1; transform: scaleX(1); }
+        100% { opacity: 0; transform: scaleX(1); }
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .gallery-grid {
+            grid-template-columns: repeat(6, 1fr);
+            grid-auto-rows: 250px;
+            gap: 20px;
+        }
+        
+        .gallery-item:nth-child(1),
+        .gallery-item:nth-child(7) {
+            grid-column: span 3;
+        }
+        
+        .gallery-item:nth-child(2),
+        .gallery-item:nth-child(3),
+        .gallery-item:nth-child(4),
+        .gallery-item:nth-child(5) {
+            grid-column: span 2;
+        }
+        
+        .gallery-item:nth-child(6) {
+            grid-column: span 6;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .gallery-section {
+            padding: 80px 0;
+        }
+        
+        .gallery-container {
+            padding: 0 20px;
+        }
+        
+        .gallery-grid {
+            grid-template-columns: 1fr;
+            grid-auto-rows: 300px;
+            gap: 15px;
+        }
+        
+        .gallery-item {
+            grid-column: span 1 !important;
+            grid-row: span 1 !important;
+        }
+        
+        .gallery-content {
+            opacity: 1;
+            transform: translateY(0);
+            padding: 30px;
+        }
+        
+        .gallery-label,
+        .gallery-description,
+        .gallery-details {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .gallery-description {
+            font-size: 1.5rem;
+        }
+        
+        .gallery-details {
+            display: none;
+        }
+    }
+</style>
+
+<section class="gallery-section">
+    <div class="gallery-container">
+        <!-- Gallery Header -->
+        <div class="gallery-header">
+            <h2 class="gallery-title">
+                <span>Campus Gallery</span>
+            </h2>
+            <p class="gallery-subtitle">A Glimpse Into Student Life</p>
+        </div>
+        
+        <!-- Gallery Grid -->
+        <div class="gallery-grid">
+            <!-- Gallery Item 1 - Hostel Building 1 -->
+            <div class="gallery-item">
+                <div class="reveal-line"></div>
+                <div class="gallery-image">
+                    <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=1000" alt="Modern Hostel Building">
+                </div>
+                <div class="gallery-content">
+                    <p class="gallery-label">Main Building</p>
+                    <h3 class="gallery-description">International Students Hostel</h3>
+                    <div class="gallery-details">
+                        <ul>
+                            <li>8-story modern architecture</li>
+                            <li>24/7 security & CCTV surveillance</li>
+                            <li>Capacity: 500+ students</li>
+                            <li>Separate wings for boys and girls</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gallery Item 2 - Hostel Room 1 -->
+            <div class="gallery-item">
+                <div class="reveal-line"></div>
+                <div class="gallery-image">
+                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600" alt="Twin Sharing Room">
+                </div>
+                <div class="gallery-content">
+                    <p class="gallery-label">Accommodation</p>
+                    <h3 class="gallery-description">Twin Sharing Room</h3>
+                    <div class="gallery-details">
+                        <ul>
+                            <li>Air-conditioned rooms</li>
+                            <li>Study table & wardrobe</li>
+                            <li>Attached bathroom</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gallery Item 3 - Hostel Room 2 -->
+            <div class="gallery-item">
+                <div class="reveal-line"></div>
+                <div class="gallery-image">
+                    <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600" alt="Single Room">
+                </div>
+                <div class="gallery-content">
+                    <p class="gallery-label">Premium</p>
+                    <h3 class="gallery-description">Single Occupancy</h3>
+                    <div class="gallery-details">
+                        <ul>
+                            <li>Spacious private room</li>
+                            <li>Mini refrigerator</li>
+                            <li>High-speed WiFi</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gallery Item 4 - Reception Hall -->
+            <div class="gallery-item">
+                <div class="reveal-line"></div>
+                <div class="gallery-image">
+                    <img src="https://images.unsplash.com/photo-1564078516393-cf04bd966897?w=600" alt="Reception Hall">
+                </div>
+                <div class="gallery-content">
+                    <p class="gallery-label">Welcome Area</p>
+                    <h3 class="gallery-description">Reception Hall</h3>
+                    <div class="gallery-details">
+                        <ul>
+                            <li>24/7 help desk</li>
+                            <li>Guest waiting lounge</li>
+                            <li>Package collection point</li>
+                            <li>Student assistance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gallery Item 5 - Corridor -->
+            <div class="gallery-item">
+                <div class="reveal-line"></div>
+                <div class="gallery-image">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600" alt="Hostel Corridor">
+                </div>
+                <div class="gallery-content">
+                    <p class="gallery-label">Living Spaces</p>
+                    <h3 class="gallery-description">Modern Corridors</h3>
+                    <div class="gallery-details">
+                        <ul>
+                            <li>Well-lit pathways</li>
+                            <li>Emergency exits</li>
+                            <li>Fire safety equipment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gallery Item 6 - Dining Hall -->
+            <div class="gallery-item">
+                <div class="reveal-line"></div>
+                <div class="gallery-image">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1000" alt="Dining Hall">
+                </div>
+                <div class="gallery-content">
+                    <p class="gallery-label">Dining Experience</p>
+                    <h3 class="gallery-description">
+                    <h3 class="gallery-description">Multi-Cuisine Dining Hall</h3>
+                    <div class="gallery-details">
+                        <ul>
+                            <li>Capacity: 300+ students</li>
+                            <li>Hygienic food preparation</li>
+                            <li>Vegetarian & non-vegetarian options</li>
+                            <li>Regional Indian cuisines</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gallery Item 7 - Hostel Building 2 -->
+            <div class="gallery-item">
+                <div class="reveal-line"></div>
+                <div class="gallery-image">
+                    <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1000" alt="Hostel Exterior">
+                </div>
+                <div class="gallery-content">
+                    <p class="gallery-label">Campus View</p>
+                    <h3 class="gallery-description">Hostel Complex Exterior</h3>
+                    <div class="gallery-details">
+                        <ul>
+                            <li>Landscaped gardens</li>
+                            <li>Outdoor seating areas</li>
+                            <li>Sports facilities nearby</li>
+                            <li>Parking space available</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Gallery Animation Script
+    document.addEventListener('DOMContentLoaded', function() {
+        // Intersection Observer for gallery items
+        const galleryObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Animate header first
+                    if (entry.target.classList.contains('gallery-header')) {
+                        entry.target.classList.add('visible');
+                    }
+                    // Then animate gallery items with stagger
+                    else if (entry.target.classList.contains('gallery-item')) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                            
+                            // Trigger reveal line animation
+                            const revealLine = entry.target.querySelector('.reveal-line');
+                            if (revealLine) {
+                                revealLine.style.animationDelay = `${index * 0.1}s`;
+                            }
+                        }, index * 150);
+                    }
+                    galleryObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        
+        // Observe elements
+        const galleryHeader = document.querySelector('.gallery-header');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        if (galleryHeader) galleryObserver.observe(galleryHeader);
+        galleryItems.forEach(item => galleryObserver.observe(item));
+        
+        // Parallax effect for images
+        const galleryImages = document.querySelectorAll('.gallery-image img');
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+        
+        function updateParallax() {
+            const scrollY = window.scrollY;
+            
+            galleryImages.forEach((img, index) => {
+                const rect = img.getBoundingClientRect();
+                const speed = 0.5;
+                const yPos = -(rect.top * speed * 0.1);
+                
+                img.style.transform = `scale(1.1) translateY(${yPos}px)`;
+            });
+            
+            ticking = false;
+        }
+        
+        function requestParallax() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }
+        
+        // Only enable parallax on desktop
+        if (window.innerWidth > 768) {
+            window.addEventListener('scroll', requestParallax);
+        }
+        
+        // Interactive hover effects
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('mouseenter', function(e) {
+                // Add magnetic effect
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const deltaX = (x - centerX) / centerX;
+                const deltaY = (y - centerY) / centerY;
+                
+                this.style.transform = `
+                    scale(1.02) 
+                    rotateX(${deltaY * -3}deg) 
+                    rotateY(${deltaX * 3}deg)
+                    translateZ(20px)
+                `;
+            });
+            
+            item.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const deltaX = (x - centerX) / centerX;
+                const deltaY = (y - centerY) / centerY;
+                
+                this.style.transform = `
+                    scale(1.02) 
+                    rotateX(${deltaY * -3}deg) 
+                    rotateY(${deltaX * 3}deg)
+                    translateZ(20px)
+                `;
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) rotateX(0) rotateY(0) translateZ(0)';
+            });
+        });
+        
+        // Click effect - Ripple animation
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Create ripple
+                const ripple = document.createElement('div');
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(201, 169, 97, 0.3);
+                    transform: scale(0);
+                    animation: rippleEffect 0.8s ease-out;
+                    pointer-events: none;
+                    z-index: 10;
+                `;
+                
+                const size = Math.max(rect.width, rect.height) * 2;
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = (x - size / 2) + 'px';
+                ripple.style.top = (y - size / 2) + 'px';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 800);
+            });
+        });
+        
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rippleEffect {
+                to {
+                    transform: scale(1);
+                    opacity: 0;
+                }
+            }
+            
+            .gallery-item {
+                transform-style: preserve-3d;
+                perspective: 1000px;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Mobile touch support
+        if ('ontouchstart' in window) {
+            galleryItems.forEach(item => {
+                let touchStartY = 0;
+                
+                item.addEventListener('touchstart', function(e) {
+                    touchStartY = e.touches[0].clientY;
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                item.addEventListener('touchend', function(e) {
+                    const touchEndY = e.changedTouches[0].clientY;
+                    const deltaY = touchStartY - touchEndY;
+                    
+                    // Only scale back if it wasn't a scroll
+                    if (Math.abs(deltaY) < 10) {
+                        this.style.transform = 'scale(1)';
+                    }
+                });
+            });
+        }
+        
+        // Window resize handler
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                // Recalculate positions
+                if (window.innerWidth <= 768) {
+                    window.removeEventListener('scroll', requestParallax);
+                } else {
+                    window.addEventListener('scroll', requestParallax);
+                }
+            }, 250);
+        });
+    });
+</script>

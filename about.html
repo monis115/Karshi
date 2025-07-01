@@ -1,0 +1,3688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rector's Welcome</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f5f5f5;
+        }
+
+        .welcome-section {
+            min-height: 100vh;
+            background-color: whitesmoke;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated Grid Background */
+        .grid-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Horizontal lines */
+        .horizontal-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .h-line {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background-color: #000;
+            opacity: 0.2;
+            overflow: hidden;
+        }
+
+        .h-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                #51C9C2 20%,
+                #582959 50%,
+                #51C9C2 80%,
+                transparent 100%);
+            box-shadow: 0 0 15px #51C9C2, 0 0 30px #582959;
+            animation: glowMoveHorizontal 8s linear infinite;
+        }
+
+        @keyframes glowMoveHorizontal {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* Vertical lines */
+        .vertical-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .v-line {
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            background-color: #000;
+            opacity: 0.2;
+            overflow: hidden;
+        }
+
+        .v-line::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                transparent 0%, 
+                #51C9C2 20%,
+                #582959 50%,
+                #51C9C2 80%,
+                transparent 100%);
+            box-shadow: 0 0 15px #51C9C2, 0 0 30px #582959;
+            animation: glowMoveVertical 8s linear infinite;
+        }
+
+        @keyframes glowMoveVertical {
+            0% {
+                top: -100%;
+            }
+            100% {
+                top: 100%;
+            }
+        }
+
+        /* Generate grid lines */
+        .h-line:nth-child(1) { top: 10%; }
+        .h-line:nth-child(2) { top: 20%; }
+        .h-line:nth-child(3) { top: 30%; }
+        .h-line:nth-child(4) { top: 40%; }
+        .h-line:nth-child(5) { top: 50%; }
+        .h-line:nth-child(6) { top: 60%; }
+        .h-line:nth-child(7) { top: 70%; }
+        .h-line:nth-child(8) { top: 80%; }
+        .h-line:nth-child(9) { top: 90%; }
+
+        .v-line:nth-child(1) { left: 10%; }
+        .v-line:nth-child(2) { left: 20%; }
+        .v-line:nth-child(3) { left: 30%; }
+        .v-line:nth-child(4) { left: 40%; }
+        .v-line:nth-child(5) { left: 50%; }
+        .v-line:nth-child(6) { left: 60%; }
+        .v-line:nth-child(7) { left: 70%; }
+        .v-line:nth-child(8) { left: 80%; }
+        .v-line:nth-child(9) { left: 90%; }
+
+        /* Stagger animations */
+        .h-line:nth-child(odd)::after { animation-delay: 0s; }
+        .h-line:nth-child(even)::after { animation-delay: 4s; }
+        .v-line:nth-child(odd)::after { animation-delay: 2s; }
+        .v-line:nth-child(even)::after { animation-delay: 6s; }
+
+        /* Different speeds for variety */
+        .h-line:nth-child(3n)::after { animation-duration: 10s; }
+        .h-line:nth-child(3n+1)::after { animation-duration: 12s; }
+        .v-line:nth-child(3n)::after { animation-duration: 9s; }
+        .v-line:nth-child(3n+1)::after { animation-duration: 11s; }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .welcome-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .welcome-header h1 {
+            color: #582959;
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .welcome-header .subtitle {
+            color: #333;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .rector-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            position: sticky;
+            top: 80px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .rector-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(88, 41, 89, 0.2);
+        }
+
+        .rector-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid #51C9C2;
+            margin-bottom: 20px;
+            object-fit: cover;
+            filter: grayscale(20%);
+            transition: filter 0.3s ease;
+        }
+
+        .rector-card:hover .rector-image {
+            filter: grayscale(0%);
+        }
+
+        .rector-name {
+            color: #582959;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .rector-title {
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .message-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 50px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-content::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 80px;
+            color: #51C9C2;
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+
+        .greeting {
+            color: #582959;
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .message-text {
+            color: #333;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 40px;
+            color: #51C9C2;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        /* Accent decoration */
+        .accent-line {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #582959 0%, #51C9C2 100%);
+            margin: 30px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .rector-card {
+                position: relative;
+                top: 0;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .message-content {
+                padding: 40px 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .welcome-header h1 {
+                font-size: 2rem;
+            }
+
+            .welcome-header .subtitle {
+                font-size: 1rem;
+            }
+
+            .message-content {
+                padding: 30px 20px;
+            }
+
+            .message-text {
+                font-size: 1rem;
+            }
+
+            .rector-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            /* Reduce number of grid lines on mobile */
+            .h-line:nth-child(even),
+            .v-line:nth-child(even) {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 40px 15px;
+            }
+
+            .welcome-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .rector-name {
+                font-size: 1.2rem;
+            }
+
+            .rector-title {
+                font-size: 0.9rem;
+            }
+
+            .greeting {
+                font-size: 1.1rem;
+            }
+
+            .message-text {
+                font-size: 0.95rem;
+                text-align: left;
+            }
+        }
+
+        /* Performance optimization for animations */
+        @media (prefers-reduced-motion: reduce) {
+            .h-line::after,
+            .v-line::after {
+                animation: none;
+            }
+        }
+
+
+        #abutUzbekistan {
+            background: white;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .uzbekistan-section {
+            position: relative;
+            min-height: 100vh;
+            padding: 80px 20px;
+            overflow: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(88, 41, 89, 0.1);
+            animation: floatCircle 15s infinite ease-in-out;
+        }
+
+        .bg-circle:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .bg-circle:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 5s;
+        }
+
+        .bg-circle:nth-child(3) {
+            width: 300px;
+            height: 300px;
+            bottom: 20%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes floatCircle {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+            50% { transform: translate(50px, -50px) scale(1.2); opacity: 0.4; }
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: #582959;
+            text-align: center;
+            position: relative;
+            margin-bottom: 100px;
+            text-shadow: 0 0 15px rgba(88, 41, 89, 0.3);
+        }
+
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            width: 120px;
+            height: 5px;
+            background: linear-gradient(90deg, #582959, transparent);
+            transform: translateX(-50%);
+        }
+
+        .hex-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hex-fact {
+            position: relative;
+            width: 180px;
+            height: 208px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: linear-gradient(135deg, #582959, #7b3f8a);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            will-change: transform;
+        }
+
+        .hex-fact:hover {
+            transform: translateY(-10px) rotate(10deg);
+            box-shadow: 0 0 25px rgba(88, 41, 89, 0.6);
+        }
+
+        .hex-fact i {
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 8px;
+            animation: iconPulse 2s infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .hex-fact span {
+            font-weight: 600;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .hex-fact p {
+            font-size: 0.85rem;
+            color: #e0e0e0;
+        }
+
+        .map-wrapper {
+            position: relative;
+            max-width: 500px;
+            margin: 60px auto;
+            perspective: 1200px;
+        }
+
+        .uzbekistan-map {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 20px;
+            /* box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); */
+            /* filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2)); */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform: rotateX(15deg);
+        }
+
+        .uzbekistan-map:hover {
+            transform: rotateX(0deg) scale(1.05);
+        }
+
+        .flag {
+            position: absolute;
+            top: -50px;
+            left: 30px;
+            width: 90px;
+            height: auto;
+            animation: floatFlag 2.5s ease-in-out infinite;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes floatFlag {
+            0%, 100% { transform: translateY(0) rotate(5deg); }
+            50% { transform: translateY(-15px) rotate(-5deg); }
+        }
+
+        .svg-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .svg-mask path {
+            animation: drawPath 10s infinite linear;
+        }
+
+        @keyframes drawPath {
+            0% { stroke-dashoffset: 1000; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        /* Uzbekistan Section with Connecting Lines */
+        .uzbekistan-section {
+            position: relative;
+            min-height: 100vh;
+            padding: 80px 20px;
+            overflow: hidden;
+        }
+
+        /* Map and Hex Container */
+        .map-hex-container {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 60px;
+            min-height: 800px;
+        }
+
+        /* Enhanced SVG Connecting Lines */
+        .connecting-lines-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .connecting-line {
+            stroke: #582959;
+            stroke-width: 4;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 10px rgba(88, 41, 89, 0.6));
+            opacity: 1;
+        }
+
+        .line-left {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 0;
+        }
+
+        .line-right {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 0;
+        }
+
+        /* Connection Points in SVG */
+        .connection-point-left,
+        .connection-point-right {
+            fill: #51C9C2;
+            filter: drop-shadow(0 0 10px #51C9C2);
+            opacity: 0;
+        }
+
+        /* Sparkle Effects in SVG */
+        .sparkle {
+            fill: #51C9C2;
+            filter: drop-shadow(0 0 5px #51C9C2);
+            opacity: 0;
+        }
+
+        /* Moving Dots */
+        .moving-dot {
+            fill: #51C9C2;
+            filter: drop-shadow(0 0 8px #51C9C2);
+            opacity: 0;
+        }
+
+        .dot-left {
+            animation: moveDotLeft 4s linear infinite;
+        }
+
+        .dot-right {
+            animation: moveDotRight 4s linear infinite;
+        }
+
+        @keyframes moveDotLeft {
+            0% {
+                cx: 400;
+                cy: 300;
+                opacity: 1;
+            }
+            50% {
+                cx: 200;
+                cy: 300;
+                opacity: 1;
+            }
+            100% {
+                cx: 200;
+                cy: 500;
+                opacity: 1;
+            }
+        }
+
+        @keyframes moveDotRight {
+            0% {
+                cx: 800;
+                cy: 300;
+                opacity: 1;
+            }
+            50% {
+                cx: 1000;
+                cy: 300;
+                opacity: 1;
+            }
+            100% {
+                cx: 1000;
+                cy: 500;
+                opacity: 1;
+            }
+        }
+
+        .map-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .uzbekistan-map {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform: rotateX(15deg);
+        }
+
+        .uzbekistan-map:hover {
+            transform: rotateX(0deg) scale(1.05);
+        }
+
+        .hex-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Responsive Design for Connecting Lines */
+        @media (max-width: 1024px) {
+            .map-hex-container {
+                gap: 40px;
+            }
+            
+            .connecting-line {
+                stroke-width: 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .connecting-line {
+                stroke-width: 2;
+            }
+            
+            .map-hex-container {
+                gap: 30px;
+            }
+            
+            /* Simplify lines on mobile */
+            .connecting-lines-svg {
+                display: none;
+            }
+            
+            /* Use CSS-based lines for mobile */
+            .map-hex-container::before,
+            .map-hex-container::after {
+                content: '';
+                position: absolute;
+                background: linear-gradient(90deg, #582959, #51C9C2);
+                opacity: 0.6;
+                z-index: 1;
+            }
+            
+            .map-hex-container::before {
+                left: 20%;
+                top: 50%;
+                width: 100px;
+                height: 2px;
+                transform: translateY(-50%);
+            }
+            
+            .map-hex-container::after {
+                right: 20%;
+                top: 50%;
+                width: 100px;
+                height: 2px;
+                transform: translateY(-50%);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .map-hex-container {
+                gap: 20px;
+            }
+            
+            .hex-container {
+                gap: 20px;
+            }
+            
+            .hex-fact {
+                width: 150px;
+                height: 173px;
+            }
+        }
+
+        /* Location Dot Styles */
+        .location-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .dot-core {
+            width: 12px;
+            height: 12px;
+            background: #51C9C2;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px #51C9C2, 0 0 40px #51C9C2;
+            animation: blink 2s infinite;
+        }
+
+        .dot-pulse {
+            width: 24px;
+            height: 24px;
+            background: rgba(81, 201, 194, 0.6);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 2s infinite;
+        }
+
+        .dot-ripple {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #51C9C2;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: ripple 3s infinite;
+        }
+
+        .dot-glow {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(81, 201, 194, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: glow 4s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            25% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.2); }
+            75% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.8); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.4; }
+            100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
+        }
+
+        @keyframes ripple {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* Modern Spinner Styles */
+        .spinner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(88, 41, 89, 0.95);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .spinner-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .spinner-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .spinner-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top: 3px solid #51C9C2;
+            animation: spin 1s linear infinite;
+        }
+
+        .spinner-ring:nth-child(2) {
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            border-top-color: #582959;
+            animation: spin 1.2s linear infinite reverse;
+        }
+
+        .spinner-ring:nth-child(3) {
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+            border-top-color: #51C9C2;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .spinner-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #51C9C2, #582959);
+            border-radius: 50%;
+            animation: pulse-core 1.5s ease-in-out infinite;
+        }
+
+        .spinner-text {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            animation: fadeInOut 2s ease-in-out infinite;
+        }
+
+        .spinner-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #51C9C2;
+            border-radius: 50%;
+            animation: particleFloat 3s linear infinite;
+        }
+
+        .particle:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
+        .particle:nth-child(2) { top: 80%; left: 80%; animation-delay: 0.5s; }
+        .particle:nth-child(3) { top: 20%; left: 80%; animation-delay: 1s; }
+        .particle:nth-child(4) { top: 80%; left: 20%; animation-delay: 1.5s; }
+        .particle:nth-child(5) { top: 50%; left: 10%; animation-delay: 2s; }
+        .particle:nth-child(6) { top: 50%; left: 90%; animation-delay: 2.5s; }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse-core {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0;
+            }
+            25% {
+                opacity: 1;
+            }
+            75% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(20px, -20px) scale(0);
+                opacity: 0;
+            }
+        }
+
+
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
+        
+        #karshi-city-section {
+            position: relative;
+            background: #F9F6F8;
+            padding: 120px 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Animated gradient orbs */
+        #karshi-city-section .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.3;
+            animation: morphOrb 20s infinite ease-in-out;
+        }
+        
+        #karshi-city-section .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #E8DFE6 0%, #F5E6F0 100%);
+            top: -300px;
+            right: -200px;
+            animation-delay: 0s;
+        }
+        
+        #karshi-city-section .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #F0E5EA 0%, #E6D9E2 100%);
+            bottom: -200px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+        
+        #karshi-city-section .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #EDE4E9 0%, #F2E8EE 100%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -5s;
+        }
+        
+        @keyframes morphOrb {
+            0%, 100% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                border-radius: 50%;
+            }
+            25% {
+                transform: translate(50px, -30px) scale(1.1) rotate(90deg);
+                border-radius: 40% 60% 60% 40%;
+            }
+            50% {
+                transform: translate(-30px, 50px) scale(0.9) rotate(180deg);
+                border-radius: 60% 40% 40% 60%;
+            }
+            75% {
+                transform: translate(-50px, -20px) scale(1.05) rotate(270deg);
+                border-radius: 45% 55% 55% 45%;
+            }
+        }
+        
+        /* Container */
+        #karshi-city-section .premium-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Main Layout */
+        #karshi-city-section .premium-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        
+        /* Connecting line from image to accent section */
+        #karshi-city-section .image-to-accent-connector {
+            position: absolute;
+            top: 70%;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        #karshi-city-section .connector-line {
+            position: absolute;
+            top: 50%;
+            left: 35%;
+            width: 30%;
+            height: 3px;
+            background: #000000;
+            transform: translateY(-50%);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        #karshi-city-section .connector-line::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: -50px;
+            width: 3px;
+            height: 50px;
+            background: #000000;
+            transform: translateY(-50%);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        #karshi-city-section .connector-line::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 3px;
+            height: 80px;
+            background: #000000;
+            transform: translateY(-50%);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        #karshi-city-section .moving-dot-connector {
+            position: absolute;
+            top: 50%;
+            left: 35%;
+            width: 15px;
+            height: 15px;
+            background: #ffffff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 
+                0 0 20px #ffffff,
+                0 0 40px rgba(255, 255, 255, 0.6),
+                0 0 60px rgba(255, 255, 255, 0.3);
+            animation: moveDotLConnector 4s linear infinite;
+            z-index: 11;
+        }
+        
+        #karshi-city-section .moving-dot-connector::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 25px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        #karshi-city-section .moving-dot-connector::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 35px;
+            height: 35px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: rippleGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes moveDotLConnector {
+            0% {
+                left: 35%;
+                top: 25%;
+                transform: translate(-50%, -50%);
+            }
+            25% {
+                left: 35%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+            50% {
+                left: 65%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+            100% {
+                left: 65%;
+                top: calc(50% + 50px);
+                transform: translate(-50%, -50%);
+            }
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0.2;
+            }
+        }
+        
+        @keyframes rippleGlow {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive adjustments for connector */
+        @media (max-width: 1200px) {
+            .connector-line {
+                left: 40%;
+                width: 20%;
+            }
+            
+            .moving-dot-connector {
+                left: 40%;
+            }
+            
+            @keyframes moveDotLConnector {
+                0% {
+                    left: 40%;
+                    top: 25%;
+                    transform: translate(-50%, -50%);
+                }
+                25% {
+                    left: 40%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                }
+                50% {
+                    left: 60%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                }
+                100% {
+                    left: 60%;
+                    top: calc(50% + 40px);
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .image-to-accent-connector {
+                display: none;
+            }
+        }
+        
+        /* Left Column - Hero Visual */
+        #karshi-city-section .hero-visual {
+            position: relative;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        #karshi-city-section .image-frame {
+            position: relative;
+            border-radius: 40px;
+            overflow: visible;
+            background: #F8F7F8;
+            padding: 20px;
+            box-shadow: none;
+        }
+        
+        #karshi-city-section .image-frame:hover {
+            box-shadow: none;
+        }
+        
+        #karshi-city-section .main-image {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 25px;
+            filter: saturate(0.95) contrast(1.05);
+            box-shadow: none;
+        }
+        
+        /* Blend Overlay - Your brilliant solution! */
+        #karshi-city-section .blend-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 25px;
+            background: radial-gradient(ellipse 90% 90% at 50% 50%, 
+                transparent 40%, 
+                rgba(248, 247, 248, 0.3) 60%, 
+                rgba(248, 247, 248, 0.6) 75%, 
+                rgba(248, 247, 248, 0.8) 85%, 
+                rgba(248, 247, 248, 0.95) 95%, 
+                #F8F7F8 100%);
+            z-index: 5;
+            pointer-events: none;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        /* Enhanced hover effect for blend overlay */
+        #karshi-city-section .image-frame:hover .blend-overlay {
+            background: radial-gradient(ellipse 95% 95% at 50% 50%, 
+                transparent 50%, 
+                rgba(248, 247, 248, 0.2) 65%, 
+                rgba(248, 247, 248, 0.5) 80%, 
+                rgba(248, 247, 248, 0.7) 90%, 
+                rgba(248, 247, 248, 0.9) 97%, 
+                #F8F7F8 100%);
+        }
+        
+        /* Enhanced hover effect for main image */
+        #karshi-city-section .image-frame:hover .main-image {
+            filter: saturate(1.05) contrast(1.1);
+        }
+        
+        /* Optional: On hover, slightly increase the clear area for a subtle effect */
+        #karshi-city-section .image-frame:hover .main-image {
+            mask-image: radial-gradient(ellipse 95% 95% at 50% 50%, 
+                black 50%, 
+                rgba(0,0,0,0.9) 65%, 
+                rgba(0,0,0,0.7) 80%, 
+                rgba(0,0,0,0.4) 90%, 
+                transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 95% 95% at 50% 50%, 
+                black 50%, 
+                rgba(0,0,0,0.9) 65%, 
+                rgba(0,0,0,0.7) 80%, 
+                rgba(0,0,0,0.4) 90%, 
+                transparent 100%);
+            filter: saturate(1.05) contrast(1.1);
+            background: linear-gradient(135deg, 
+                #F8F7F8 0%, 
+                rgba(248, 247, 248, 0.9) 25%, 
+                rgba(248, 247, 248, 0.5) 50%, 
+                rgba(248, 247, 248, 0.2) 75%, 
+                transparent 90%);
+        }
+        
+        /* Optional: On hover, slightly increase the clear area for a subtle effect */
+        #karshi-city-section .image-frame:hover .main-image {
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 70%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 70%, transparent 100%);
+            filter: saturate(1) contrast(1.1);
+        }
+        
+        /* Floating info badges */
+        #karshi-city-section .info-badge {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 245, 247, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(89, 41, 88, 0.1);
+            padding: 15px 25px;
+            border-radius: 11px;
+            box-shadow: 
+                0 8px 32px rgba(89, 41, 88, 0.15),
+                0 4px 16px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(89, 41, 88, 0.1);
+            font-size: 14px;
+            font-weight: 600;
+            color: #592958;
+            white-space: nowrap;
+            z-index: 20;
+            transform-origin: center;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Stylized Arrow with ➤ character */
+        #karshi-city-section .badge-arrow {
+            font-size: 1.5em;
+            color: #592958;
+            font-weight: bold;
+            margin-right: 10px;
+            display: inline-block;
+            line-height: 1;
+            transition: all 0.3s ease;
+            animation: arrowPulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 2px 4px rgba(89, 41, 88, 0.3));
+        }
+        
+        @keyframes arrowPulse {
+            0%, 100% { 
+                transform: scale(1);
+            }
+            50% { 
+                transform: scale(1.2);
+            }
+        }
+        
+        #karshi-city-section .info-badge:hover .badge-arrow {
+            color: #51C9C2;
+            transform: scale(1.1);
+        }
+        
+        /* Horizontal internal animation */
+        #karshi-city-section .info-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(89, 41, 88, 0.2) 30%,
+                rgba(81, 201, 194, 0.3) 50%,
+                rgba(89, 41, 88, 0.2) 70%,
+                transparent 100%);
+            animation: horizontalScan 4s ease-in-out infinite;
+            border-radius: 11px;
+        }
+        
+        @keyframes horizontalScan {
+            0% { 
+                left: -100%; 
+                opacity: 0;
+            }
+            20% { 
+                opacity: 1;
+            }
+            80% { 
+                opacity: 1;
+            }
+            100% { 
+                left: 100%; 
+                opacity: 0;
+            }
+        }
+        
+        #karshi-city-section .info-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 15px 40px rgba(89, 41, 88, 0.25),
+                0 8px 20px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                0 0 30px rgba(89, 41, 88, 0.2);
+            border-color: rgba(89, 41, 88, 0.3);
+            text-shadow: 0 0 10px rgba(89, 41, 88, 0.3);
+        }
+        
+        #karshi-city-section .badge-1 {
+            top: 40px;
+            right: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 229, 234, 0.95) 100%);
+        }
+        
+        #karshi-city-section .badge-2 {
+            bottom: 80px;
+            left: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(230, 217, 226, 0.95) 100%);
+        }
+        
+        /* Add decorative elements to badges */
+        #karshi-city-section .info-badge::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(89, 41, 88, 0.05) 0%, transparent 70%);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.3s ease;
+            pointer-events: none;
+        }
+        
+        #karshi-city-section .info-badge:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        /* Add sparkle effect */
+        #karshi-city-section .info-badge .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #592958;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle 2s infinite;
+        }
+        
+        #karshi-city-section .info-badge .sparkle:nth-child(1) {
+            top: 20%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+        
+        #karshi-city-section .info-badge .sparkle:nth-child(2) {
+            top: 30%;
+            right: 20%;
+            animation-delay: 0.5s;
+        }
+        
+        #karshi-city-section .info-badge .sparkle:nth-child(3) {
+            bottom: 25%;
+            left: 25%;
+            animation-delay: 1s;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { 
+                opacity: 0; 
+                transform: scale(0) rotate(0deg); 
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1) rotate(180deg); 
+            }
+        }
+        
+        /* Right Column - Content Area */
+        #karshi-city-section .content-area {
+            animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        #karshi-city-section .title-section {
+            margin-bottom: 50px;
+        }
+        
+        #karshi-city-section .main-title {
+            font-size: 64px;
+            font-weight: 700;
+            color: #1A1A1A;
+            line-height: 1.1;
+            margin: 0 0 20px 0;
+            letter-spacing: -2px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        #karshi-city-section .main-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 6px;
+            background: linear-gradient(90deg, #D4C4CE 0%, #E8DFE6 100%);
+            border-radius: 3px;
+            animation: expandWidth 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
+        }
+        
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 100px; }
+        }
+        
+        #karshi-city-section .subtitle {
+            font-size: 20px;
+            color: #6B6B6B;
+            font-weight: 300;
+            line-height: 1.6;
+            margin-top: 30px;
+        }
+        
+        /* Premium Card Grid */
+        #karshi-city-section .info-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 50px;
+        }
+        
+        #karshi-city-section .info-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,0,0,0.04);
+            border-radius: 24px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            opacity: 0;
+            animation: cardReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        #karshi-city-section .info-card:nth-child(1) { animation-delay: 0.8s; }
+        #karshi-city-section .info-card:nth-child(2) { animation-delay: 0.9s; }
+        #karshi-city-section .info-card:nth-child(3) { animation-delay: 1.0s; }
+        #karshi-city-section .info-card:nth-child(4) { animation-delay: 1.1s; }
+        #karshi-city-section .info-card:nth-child(5) { animation-delay: 1.2s; }
+        #karshi-city-section .info-card:nth-child(6) { animation-delay: 1.3s; }
+        
+        @keyframes cardReveal {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        #karshi-city-section .info-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 
+                0 0 0 1px rgba(0,0,0,0.05),
+                0 20px 40px -15px rgba(0,0,0,0.15),
+                0 30px 60px -20px rgba(0,0,0,0.1);
+        }
+        
+        /* Animated gradient background for cards */
+        #karshi-city-section .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                transparent 0%, 
+                rgba(228, 215, 225, 0.1) 50%, 
+                transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.8s ease;
+        }
+        
+        #karshi-city-section .info-card:hover::before {
+            transform: translateX(100%);
+        }
+        
+        /* Card Icon */
+        #karshi-city-section .card-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #F0E5EA 0%, #E6D9E2 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #karshi-city-section .card-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: #4A4A4A;
+            stroke-width: 2;
+            fill: none;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Icon animation on hover */
+        #karshi-city-section .info-card:hover .card-icon {
+            animation: iconPulse 0.6s ease;
+        }
+        
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+        
+        #karshi-city-section .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        
+        #karshi-city-section .card-description {
+            font-size: 14px;
+            color: #6B6B6B;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+        
+        /* Decorative Elements */
+        #karshi-city-section .decoration-grid {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+        
+        #karshi-city-section .grid-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #1A1A1A;
+            border-radius: 50%;
+        }
+        
+        /* Create a 4x4 grid of dots */
+        #karshi-city-section .grid-dot:nth-child(1) { top: 0; left: 0; }
+        #karshi-city-section .grid-dot:nth-child(2) { top: 0; left: 20px; }
+        #karshi-city-section .grid-dot:nth-child(3) { top: 0; left: 40px; }
+        #karshi-city-section .grid-dot:nth-child(4) { top: 20px; left: 0; }
+        #karshi-city-section .grid-dot:nth-child(5) { top: 20px; left: 20px; }
+        #karshi-city-section .grid-dot:nth-child(6) { top: 20px; left: 40px; }
+        #karshi-city-section .grid-dot:nth-child(7) { top: 40px; left: 0; }
+        #karshi-city-section .grid-dot:nth-child(8) { top: 40px; left: 20px; }
+        #karshi-city-section .grid-dot:nth-child(9) { top: 40px; left: 40px; }
+        
+        /* Animated lines */
+        #karshi-city-section .animated-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(212, 196, 206, 0.5) 50%, 
+                transparent 100%);
+            animation: lineScan 8s infinite linear;
+        }
+        
+        #karshi-city-section .line-1 {
+            top: 20%;
+            left: 0;
+            right: 0;
+            animation-delay: 0s;
+        }
+        
+        #karshi-city-section .line-2 {
+            top: 50%;
+            left: 0;
+            right: 0;
+            animation-delay: 2s;
+        }
+        
+        #karshi-city-section .line-3 {
+            top: 80%;
+            left: 0;
+            right: 0;
+            animation-delay: 4s;
+        }
+        
+        @keyframes lineScan {
+            0% { transform: translateX(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+        
+        /* Bottom accent section */
+        #karshi-city-section .accent-section {
+            margin-top: 60px;
+            padding: 35px 30px;
+            background: linear-gradient(135deg, 
+                rgba(240, 229, 234, 0.4) 0%, 
+                rgba(230, 217, 226, 0.4) 50%,
+                rgba(245, 240, 243, 0.4) 100%);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInScale 1s cubic-bezier(0.16, 1, 0.3, 1) 1.5s both;
+            text-decoration: none;
+            box-shadow: 
+                0 6px 24px rgba(0, 0, 0, 0.08),
+                0 3px 12px rgba(0, 0, 0, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        #karshi-city-section .accent-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 10px 32px rgba(0, 0, 0, 0.12),
+                0 5px 16px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            background: linear-gradient(135deg, 
+                rgba(240, 229, 234, 0.5) 0%, 
+                rgba(230, 217, 226, 0.5) 50%,
+                rgba(245, 240, 243, 0.5) 100%);
+        }
+        
+        /* Subtle animated background pattern */
+        #karshi-city-section .accent-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        
+        #karshi-city-section .accent-section:hover::before {
+            opacity: 1;
+        }
+        
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        #karshi-city-section .accent-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+        
+        #karshi-city-section .accent-text {
+            font-size: 17px;
+            color: #2D2D2D;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            line-height: 1.4;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        #karshi-city-section .accent-section:hover .accent-text {
+            color: #1A1A1A;
+            transform: translateX(2px);
+        }
+        
+        #karshi-city-section .accent-button {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 11px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 3px 12px rgba(0, 0, 0, 0.2),
+                0 2px 6px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            letter-spacing: 0.3px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            line-height: 1.2;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+        
+        #karshi-city-section .accent-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.2) 50%, 
+                transparent 100%);
+            transition: left 0.6s ease;
+        }
+        
+        #karshi-city-section .accent-button:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 
+                0 6px 20px rgba(0, 0, 0, 0.3),
+                0 3px 10px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
+        }
+        
+        #karshi-city-section .accent-button:hover::before {
+            left: 100%;
+        }
+        
+        #karshi-city-section .accent-button:active {
+            transform: translateY(-1px) scale(1.01);
+            box-shadow: 
+                0 3px 12px rgba(0, 0, 0, 0.25),
+                0 2px 6px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            #karshi-city-section .premium-layout {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+            
+            #karshi-city-section .image-frame {
+                transform: perspective(1000px) rotateY(0deg);
+                max-width: 700px;
+                margin: 0 auto;
+            }
+            
+            #karshi-city-section .main-title {
+                font-size: 48px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            #karshi-city-section {
+                padding: 80px 0;
+            }
+            
+            #karshi-city-section .premium-container {
+                padding: 0 24px;
+            }
+            
+            #karshi-city-section .main-title {
+                font-size: 36px;
+                letter-spacing: -1px;
+            }
+            
+            #karshi-city-section .info-cards {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            #karshi-city-section .main-image {
+                height: 400px;
+            }
+            
+            #karshi-city-section .info-badge {
+                display: none;
+            }
+            
+            #karshi-city-section .accent-content {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #karshi-city-section .main-title {
+                font-size: 32px;
+            }
+            
+            #karshi-city-section .subtitle {
+                font-size: 16px;
+            }
+            
+            #karshi-city-section .info-card {
+                padding: 24px;
+            }
+        }
+
+
+        .exploreSpinner {
+            display: none;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Button Text */
+        .button-text {
+            transition: opacity 0.3s ease;
+        }
+
+        /* Loading state */
+        .accent-button.loading .button-text {
+            opacity: 0;
+        }
+
+        .accent-button.loading .exploreSpinner {
+            display: block;
+        }
+
+        /* Pulse animation for extra flair */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .accent-button.pulse {
+            animation: pulse 1.5s infinite;
+        }
+
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(249, 246, 248, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Transparent Spinner Styles (#592958) */
+        .exploreSpinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(89, 41, 88, 0.1); /* 10% opacity */
+            border-radius: 50%;
+            border-top-color: rgba(89, 41, 88, 0.6); /* 60% opacity */
+            animation: spin 1.2s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(89, 41, 88, 0.1);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Loading Text */
+        .loading-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #592958; /* Matching spinner color */
+            font-family: 'Poppins', sans-serif;
+            margin-top: 20px;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* Additional Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .loading-content {
+            animation: fadeIn 0.5s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Pulsing dot animation */
+        .loading-text::after {
+            content: '...';
+            display: inline-block;
+            width: 20px;
+            text-align: left;
+            animation: dots 1.5s infinite step-end;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        /* Full-Page Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Spinner Styles */
+        .exploreSpinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: #592958;
+            border-right-color: #592958;
+            animation: spin 1.2s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        /* Inner circle for spinner */
+        .exploreSpinner::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 3px solid transparent;
+            border-radius: 50%;
+            border-top-color: rgba(89, 41, 88, 0.5);
+            animation: spinReverse 1.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes spinReverse {
+            to { transform: rotate(-360deg); }
+        }
+
+        /* Loading Text */
+        .loading-text {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            margin-top: 15px;
+            text-align: center;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        /* Animated dots */
+        .loading-text::after {
+            content: '...';
+            position: absolute;
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        /* L-shaped connecting line with moving dot */
+        .connecting-line-container {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 250px;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        .l-shaped-line {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .l-line-vertical {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 4px;
+            height: 100px;
+            background: #000000;
+            transform: translateX(-50%);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .l-line-horizontal {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 380px;
+            height: 4px;
+            background: #000000;
+            transform: translateX(-50%);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .moving-dot-l {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #ffffff;
+            border-radius: 50%;
+            left: 50%;
+            top: 0;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px #ffffff;
+            animation: moveDotL 3s linear infinite;
+            z-index: 16;
+        }
+
+        @keyframes moveDotL {
+            0% {
+                left: 50%;
+                top: 0;
+                transform: translate(-50%, -50%);
+            }
+            25% {
+                left: 50%;
+                top: 100px;
+                transform: translate(-50%, -50%);
+            }
+            100% {
+                left: 50%;
+                top: 100px;
+                transform: translate(calc(-50% + 190px), -50%);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .connecting-line-container {
+                width: 320px;
+                height: 200px;
+                bottom: -25px;
+            }
+
+            .l-line-horizontal {
+                width: 300px;
+            }
+
+            .l-line-vertical {
+                height: 80px;
+            }
+
+            .moving-dot-l {
+                width: 10px;
+                height: 10px;
+            }
+
+            @keyframes moveDotL {
+                0% {
+                    left: 50%;
+                    top: 0;
+                    transform: translate(-50%, -50%);
+                }
+                25% {
+                    left: 50%;
+                    top: 80px;
+                    transform: translate(-50%, -50%);
+                }
+                100% {
+                    left: 50%;
+                    top: 80px;
+                    transform: translate(calc(-50% + 150px), -50%);
+                }
+            }
+        }
+
+        @media (max-width: 480px) {
+            .connecting-line-container {
+                width: 250px;
+                height: 150px;
+                bottom: -20px;
+            }
+
+            .l-line-horizontal {
+                width: 230px;
+            }
+
+            .l-line-vertical {
+                height: 60px;
+            }
+
+            @keyframes moveDotL {
+                0% {
+                    left: 50%;
+                    top: 0;
+                    transform: translate(-50%, -50%);
+                }
+                25% {
+                    left: 50%;
+                    top: 60px;
+                    transform: translate(-50%, -50%);
+                }
+                100% {
+                    left: 50%;
+                    top: 60px;
+                    transform: translate(calc(-50% + 115px), -50%);
+                }
+            }
+        }
+
+        /* Image to Accent Section |__ shaped Connector */
+        .image-to-accent-connector {
+            position: absolute;
+            top: 70%;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .connector-line {
+            position: absolute;
+            top: 50%;
+            left: 35%;
+            width: 30%;
+            height: 3px;
+            background: #000000;
+            transform: translateY(-50%);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .connector-line::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: -50px;
+            width: 3px;
+            height: 50px;
+            background: #000000;
+            transform: translateY(-50%);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .connector-line::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 3px;
+            height: 80px;
+            background: #000000;
+            transform: translateY(-50%);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .moving-dot-connector {
+            position: absolute;
+            top: 50%;
+            left: 35%;
+            width: 15px;
+            height: 15px;
+            background: #ffffff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 
+                0 0 20px #ffffff,
+                0 0 40px rgba(255, 255, 255, 0.6),
+                0 0 60px rgba(255, 255, 255, 0.3);
+            animation: moveDotLConnector 4s linear infinite;
+            z-index: 11;
+        }
+
+        .moving-dot-connector::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 25px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        .moving-dot-connector::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 35px;
+            height: 35px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: rippleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes moveDotLConnector {
+            0% {
+                left: 35%;
+                top: 25%;
+                transform: translate(-50%, -50%);
+            }
+            25% {
+                left: 35%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+            50% {
+                left: 65%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+            100% {
+                left: 65%;
+                top: calc(50% + 50px);
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0.2;
+            }
+        }
+
+        @keyframes rippleGlow {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive adjustments for connector */
+        @media (max-width: 1200px) {
+            .connector-line {
+                left: 40%;
+                width: 20%;
+            }
+            
+            .moving-dot-connector {
+                left: 40%;
+            }
+            
+            @keyframes moveDotLConnector {
+                0% {
+                    left: 40%;
+                    top: 25%;
+                    transform: translate(-50%, -50%);
+                }
+                25% {
+                    left: 40%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                }
+                50% {
+                    left: 60%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                }
+                100% {
+                    left: 60%;
+                    top: calc(50% + 40px);
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
+
+        @media (max-width: 768px) {
+            .image-to-accent-connector {
+                display: none;
+            }
+        }
+
+
+
+        
+    </style>
+</head>
+<body>
+    <!-- Modern Spinner Overlay -->
+    <div class="spinner-overlay" id="spinnerOverlay">
+        <div class="spinner-container">
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+            <div class="spinner-core"></div>
+            <div class="spinner-text">Opening Google Maps...</div>
+            <div class="spinner-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+        </div>
+    </div>
+
+    <section class="welcome-section">
+        <!-- Animated Grid Background -->
+        <div class="grid-background">
+            <div class="horizontal-lines">
+                <div class="h-line"></div>
+                <div class="h-line"></div>
+                <div class="h-line"></div>
+                <div class="h-line"></div>
+                <div class="h-line"></div>
+                <div class="h-line"></div>
+                <div class="h-line"></div>
+                <div class="h-line"></div>
+                <div class="h-line"></div>
+            </div>
+            <div class="vertical-lines">
+                <div class="v-line"></div>
+                <div class="v-line"></div>
+                <div class="v-line"></div>
+                <div class="v-line"></div>
+                <div class="v-line"></div>
+                <div class="v-line"></div>
+                <div class="v-line"></div>
+                <div class="v-line"></div>
+                <div class="v-line"></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="welcome-header">
+                <h1>Rector's Welcome</h1>
+                <p class="subtitle">A Message from Our Leadership</p>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="rector-card">
+                    <img src="/images/ProfessorDilmurodNabiyev.jfif" alt="Prof. Dilmurod Khamidullayevich Nabiyev" class="rector-image">
+                    <h2 class="rector-name">Prof. Dilmurod K. Nabiyev</h2>
+                    <p class="rector-title">Doctor of Economics<br>Rector of Karshi State University</p>
+                    <div class="accent-line" style="margin: 20px auto; width: 40px;"></div>
+                </div>
+
+                <div class="message-content">
+                    <p class="greeting">Dear Students,</p>
+                    
+                    <p class="message-text">
+                        It is with great pleasure that I welcome you to Karshi State University — a center of academic excellence, innovation, and national development.
+                    </p>
+                    
+                    <p class="message-text">
+                        With a deep-rooted commitment to education and over two decades of experience in the fields of science, higher education, and public service, I have had the honor of contributing to the advancement of Uzbekistan's academic and youth development landscape. From my early beginnings in the private sector to serving in various strategic roles — including Deputy State Advisor to the President and Minister of Physical Education and Sports — my journey has always been driven by a belief in the transformative power of knowledge.
+                    </p>
+                    
+                    <p class="message-text">
+                        Since February 2021, I have had the privilege of leading this esteemed institution. At Karshi State University, we strive to foster a culture of academic excellence, research-driven innovation, and social responsibility. Our goal is to prepare highly qualified professionals who will shape the future of our country and contribute meaningfully to the global community.
+                    </p>
+                    
+                    <p class="message-text">
+                        I invite each of you to be part of our vibrant academic family — to learn, to question, to create, and to lead. With a dedicated faculty, a dynamic student body, and a clear vision for the future, we are confident that Karshi State University will continue to be a beacon of knowledge and progress.
+                    </p>
+                    
+                    <p class="message-text">
+                        Thank you for choosing to walk this path with us.
+                    </p>
+                    
+                    <p class="signature">Warm regards</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="abutUzbekistan">
+        <section class="uzbekistan-section">
+            <div class="bg-animation">
+                <div class="bg-circle"></div>
+                <div class="bg-circle"></div>
+                <div class="bg-circle"></div>
+            </div>
+            <svg class="svg-mask">
+                <path d="M0,50 C50,10 100,90 150,50 C200,10 250,90 300,50" fill="none" stroke="#582959" stroke-width="2" stroke-dasharray="1000" stroke-dashoffset="1000"/>
+            </svg>
+            <div class="content-container">
+                <h1 class="title">Discover Uzbekistan</h1>
+                
+                <!-- Container for map, lines, and hex content -->
+                <div class="map-hex-container">
+                    <!-- SVG for connecting lines - positioned to cover entire area -->
+                    <svg class="connecting-lines-svg" viewBox="0 0 1200 1000" preserveAspectRatio="none">
+                        <!-- Left L-shaped line from left edge of map to hex container (reversed) -->
+                        <path class="connecting-line line-left" 
+                              d="M 400 300 L 200 300 L 200 500" 
+                              stroke-dasharray="1000" 
+                              stroke-dashoffset="1000"/>
+                        
+                        <!-- Right L-shaped line from right edge of map to hex container (reversed) -->
+                        <path class="connecting-line line-right" 
+                              d="M 800 300 L 1000 300 L 1000 500" 
+                              stroke-dasharray="1000" 
+                              stroke-dashoffset="1000"/>
+                        
+                        <!-- Connection points at corners -->
+                        <circle class="connection-point-left" cx="200" cy="300" r="8" opacity="0"/>
+                        <circle class="connection-point-right" cx="1000" cy="300" r="8" opacity="0"/>
+                        
+                        <!-- Moving dots along the lines -->
+                        <circle class="moving-dot dot-left" cx="400" cy="300" r="6" opacity="0"/>
+                        <circle class="moving-dot dot-right" cx="800" cy="300" r="6" opacity="0"/>
+                        
+                        <!-- Sparkle effects along the lines -->
+                        <circle class="sparkle sparkle-1" cx="300" cy="300" r="4" opacity="0"/>
+                        <circle class="sparkle sparkle-2" cx="900" cy="300" r="4" opacity="0"/>
+                        <circle class="sparkle sparkle-3" cx="200" cy="400" r="4" opacity="0"/>
+                        <circle class="sparkle sparkle-4" cx="1000" cy="400" r="4" opacity="0"/>
+                    </svg>
+                    
+                    <div class="map-wrapper">
+                        <a href="https://www.google.com/maps/place/Qarshi+State+University/@38.8532177,65.8054687,16.52z/data=!4m6!3m5!1s0x3f4ea7d2e979e065:0xa87087180a2b55c!8m2!3d38.855233!4d65.8102961!16s%2Fg%2F11g7kfm8c1?entry=ttu&g_ep=EgoyMDI1MDYyMy4yIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">
+                            <img src="/images/ubekistanmap.jpeg" alt="Uzbekistan Map" class="uzbekistan-map">
+                            <div class="location-dot">
+                                <div class="dot-core"></div>
+                                <div class="dot-pulse"></div>
+                                <div class="dot-ripple"></div>
+                                <div class="dot-glow"></div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="hex-container">
+                        <div class="hex-fact">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Location</span>
+                            <p>Central Asia</p>
+                        </div>
+                        <div class="hex-fact">
+                            <i class="fas fa-city"></i>
+                            <span>Capital</span>
+                            <p>Tashkent</p>
+                        </div>
+                        <div class="hex-fact">
+                            <i class="fas fa-coins"></i>
+                            <span>Currency</span>
+                            <p>Uzbekistani Som</p>
+                        </div>
+                        <div class="hex-fact">
+                            <i class="fas fa-language"></i>
+                            <span>Languages</span>
+                            <p>Uzbek, Russian, English</p>
+                        </div>
+                        <div class="hex-fact">
+                            <i class="fas fa-users"></i>
+                            <span>Population</span>
+                            <p>~36 million</p>
+                        </div>
+                        <div class="hex-fact">
+                            <i class="fas fa-mosque"></i>
+                            <span>Religion</span>
+                            <p>Predominantly Muslim</p>
+                        </div>
+                        <div class="hex-fact">
+                            <i class="fas fa-thermometer-half"></i>
+                            <span>Climate</span>
+                            <p>Continental</p>
+                        </div>
+                        <div class="hex-fact">
+                            <i class="fas fa-book"></i>
+                            <span>Literacy</span>
+                            <p>Very High</p>
+                        </div>
+                        <div class="hex-fact">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Safety</span>
+                            <p>Safest in Central Asia</p>
+                        </div>
+                        <div class="hex-fact">
+                            <i class="fas fa-sun"></i>
+                            <span>Weather</span>
+                            <p>Similar to India</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <section id="karshi-city-section">
+        <!-- Animated gradient orbs -->
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        
+        <!-- Animated scan lines -->
+        <div class="animated-line line-1"></div>
+        <div class="animated-line line-2"></div>
+        <div class="animated-line line-3"></div>
+        
+        <div class="premium-container">
+            <div class="premium-layout">
+                <!-- Left Column - Hero Visual -->
+                <div class="hero-visual">
+                    <div class="image-frame">
+                        <img src="/images/karshiCity.jpg" alt="Karshi City" class="main-image">
+                        <div class="blend-overlay"></div>
+                        <div class="info-badge badge-1">
+                            <span class="badge-arrow">➤</span>
+                            Capital of Qashqadaryo
+                        </div>
+                        <div class="info-badge badge-2">
+                            <span class="badge-arrow">➤</span>
+                            Student Paradise
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Content -->
+                <div class="content-area">
+                    <div class="title-section">
+                        <h1 class="main-title">Karshi City</h1>
+                        <p class="subtitle">Where tradition meets innovation in the heart of Uzbekistan</p>
+                    </div>
+                    
+                    <div class="info-cards">
+                        <!-- Location Card -->
+                        <div class="info-card">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Strategic Location</h3>
+                            <p class="card-description">Southern Uzbekistan, capital of Qashqadaryo Region</p>
+                            <div class="decoration-grid">
+                                <div class="grid-dot"></div>
+                                <div class="grid-dot"></div>
+                                <div class="grid-dot"></div>
+                                <div class="grid-dot"></div>
+                                <div class="grid-dot"></div>
+                                <div class="grid-dot"></div>
+                                <div class="grid-dot"></div>
+                                <div class="grid-dot"></div>
+                                <div class="grid-dot"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Air Travel Card -->
+                        <div class="info-card">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Air Connectivity</h3>
+                            <p class="card-description">1-hour flight from Tashkent via Karshi Airport</p>
+                        </div>
+                        
+                        <!-- Train Card -->
+                        <div class="info-card">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Fast Rail Service</h3>
+                            <p class="card-description">Daily express trains - just 3.5 hours journey</p>
+                        </div>
+                        
+                        <!-- Road Card -->
+                        <div class="info-card">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Road Access</h3>
+                            <p class="card-description">7-8 hours by comfortable car or bus service</p>
+                        </div>
+                        
+                        <!-- Languages Card -->
+                        <div class="info-card">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Language Diversity</h3>
+                            <p class="card-description">Uzbek & Russian widely spoken, English in universities</p>
+                        </div>
+                        
+                        <!-- Living Card -->
+                        <div class="info-card">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Quality Living</h3>
+                            <p class="card-description">Affordable, safe, and perfect for student life</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Accent Section -->
+                    <div class="accent-section">
+                        <div class="accent-content">
+                            <p class="accent-text">Discover the perfect blend of culture and modernity</p>
+                            <a href="#" class="accent-button" id="exploreMoreBtn">
+                                Explore More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="exploreSpinner"></div>
+            <div class="loading-text">Loading Karshi City</div>
+        </div>
+    </section>
+    <script>
+        // Register GSAP plugins
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Welcome Section Animations
+        gsap.from(".welcome-header h1", {
+            scrollTrigger: {
+                trigger: ".welcome-header",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            y: -100,
+            rotationX: 90,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        gsap.from(".welcome-header .subtitle", {
+            scrollTrigger: {
+                trigger: ".welcome-header",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            y: 50,
+            duration: 1.2,
+            delay: 0.3,
+            ease: "power2.out"
+        });
+
+        // Rector Card Animations
+        gsap.from(".rector-card", {
+            scrollTrigger: {
+                trigger: ".rector-card",
+                start: "top 85%",
+                end: "bottom 15%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            scale: 0.8,
+            rotationY: -15,
+            duration: 1.3,
+            ease: "back.out(1.7)"
+        });
+
+        gsap.from(".rector-image", {
+            scrollTrigger: {
+                trigger: ".rector-card",
+                start: "top 85%",
+                end: "bottom 15%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            scale: 0.5,
+            rotation: 180,
+            duration: 1.5,
+            delay: 0.2,
+            ease: "elastic.out(1, 0.5)"
+        });
+
+        gsap.from(".rector-name", {
+            scrollTrigger: {
+                trigger: ".rector-card",
+                start: "top 85%",
+                end: "bottom 15%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            x: -50,
+            duration: 1,
+            delay: 0.5,
+            ease: "power2.out"
+        });
+
+        gsap.from(".rector-title", {
+            scrollTrigger: {
+                trigger: ".rector-card",
+                start: "top 85%",
+                end: "bottom 15%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            x: 50,
+            duration: 1,
+            delay: 0.7,
+            ease: "power2.out"
+        });
+
+        // Message Content Animations
+        gsap.from(".message-content", {
+            scrollTrigger: {
+                trigger: ".message-content",
+                start: "top 85%",
+                end: "bottom 15%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            y: 100,
+            scale: 0.95,
+            duration: 1.4,
+            ease: "power3.out"
+        });
+
+        // Animate each paragraph with stagger
+        gsap.from(".message-text", {
+            scrollTrigger: {
+                trigger: ".message-content",
+                start: "top 85%",
+                end: "bottom 15%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power2.out"
+        });
+
+        gsap.from(".greeting", {
+            scrollTrigger: {
+                trigger: ".message-content",
+                start: "top 85%",
+                end: "bottom 15%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            x: -100,
+            duration: 1,
+            ease: "power2.out"
+        });
+
+        gsap.from(".signature", {
+            scrollTrigger: {
+                trigger: ".message-content",
+                start: "top 85%",
+                end: "bottom 15%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            x: 100,
+            duration: 1,
+            delay: 0.5,
+            ease: "power2.out"
+        });
+
+        // Grid Background Animations
+        gsap.from(".h-line", {
+            scrollTrigger: {
+                trigger: ".welcome-section",
+                start: "top 100%",
+                end: "bottom 0%",
+                toggleActions: "play none none reverse"
+            },
+            scaleX: 0,
+            opacity: 0,
+            duration: 2,
+            stagger: 0.1,
+            ease: "power2.out"
+        });
+
+        gsap.from(".v-line", {
+            scrollTrigger: {
+                trigger: ".welcome-section",
+                start: "top 100%",
+                end: "bottom 0%",
+                toggleActions: "play none none reverse"
+            },
+            scaleY: 0,
+            opacity: 0,
+            duration: 2,
+            stagger: 0.1,
+            delay: 0.5,
+            ease: "power2.out"
+        });
+
+        // Uzbekistan Section Animations
+        gsap.from(".title", {
+            scrollTrigger: {
+                trigger: ".title",
+                start: "top 85%",
+                end: "bottom 15%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            y: -150,
+            rotationX: 45,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        // Map and Flag Animations
+        gsap.from(".uzbekistan-map", {
+            scrollTrigger: {
+                trigger: ".map-wrapper",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            scale: 0.3,
+            rotationX: 90,
+            duration: 1.8,
+            ease: "power3.out"
+        });
+
+        gsap.from(".flag", {
+            scrollTrigger: {
+                trigger: ".map-wrapper",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            y: -100,
+            rotation: 360,
+            duration: 1.2,
+            delay: 0.5,
+            ease: "back.out(1.7)"
+        });
+
+        // Hex Facts Animations with different styles
+        gsap.utils.toArray(".hex-fact").forEach((hex, i) => {
+            // Different animation styles based on index
+            let animationStyle = {};
+            
+            if (i % 4 === 0) {
+                // Scale and fade
+                animationStyle = {
+                    opacity: 0,
+                    scale: 0,
+                    rotation: 180,
+                    duration: 1.2,
+                    ease: "back.out(1.7)"
+                };
+            } else if (i % 4 === 1) {
+                // Slide from left
+                animationStyle = {
+                    opacity: 0,
+                    x: -200,
+                    rotationY: 90,
+                    duration: 1,
+                    ease: "power3.out"
+                };
+            } else if (i % 4 === 2) {
+                // Slide from right
+                animationStyle = {
+                    opacity: 0,
+                    x: 200,
+                    rotationY: -90,
+                    duration: 1,
+                    ease: "power3.out"
+                };
+            } else {
+                // Bounce from bottom
+                animationStyle = {
+                    opacity: 0,
+                    y: 200,
+                    scale: 0.5,
+                    duration: 1.3,
+                    ease: "elastic.out(1, 0.5)"
+                };
+            }
+
+            gsap.from(hex, {
+                scrollTrigger: {
+                    trigger: hex,
+                    start: "top 90%",
+                    end: "bottom 10%",
+                    toggleActions: "play none none reverse"
+                },
+                
+                delay: i * 0.1,
+                ...animationStyle
+            });
+        });
+
+        // Background Circles Animation
+        gsap.from(".bg-circle", {
+            scrollTrigger: {
+                trigger: ".uzbekistan-section",
+                start: "top 100%",
+                end: "bottom 0%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            scale: 0,
+            duration: 2,
+            stagger: 0.3,
+            ease: "power2.out"
+        });
+
+        // SVG Path Animation
+        gsap.from(".svg-mask path", {
+            scrollTrigger: {
+                trigger: ".uzbekistan-section",
+                start: "top 100%",
+                end: "bottom 0%",
+                toggleActions: "play none none reverse"
+            },
+            strokeDashoffset: 1000,
+            duration: 3,
+            ease: "power2.out"
+        });
+
+        // Icon Animations within hex facts
+        gsap.utils.toArray(".hex-fact i").forEach((icon, i) => {
+            gsap.from(icon, {
+                scrollTrigger: {
+                    trigger: icon,
+                    start: "top 90%",
+                    end: "bottom 10%",
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 0,
+                scale: 0,
+                rotation: 360,
+                duration: 1,
+                delay: i * 0.1 + 0.3,
+                ease: "back.out(1.7)"
+            });
+        });
+
+        // Text animations within hex facts
+        gsap.utils.toArray(".hex-fact span, .hex-fact p").forEach((text, i) => {
+            gsap.from(text, {
+                scrollTrigger: {
+                    trigger: text,
+                    start: "top 90%",
+                    end: "bottom 10%",
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                delay: i * 0.05 + 0.5,
+                ease: "power2.out"
+            });
+        });
+
+        // Performance optimization for reduced motion preference
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        }
+
+        // Enhanced Map and Connection Wrapper Animations
+        gsap.from(".map-hex-container", {
+            scrollTrigger: {
+                trigger: ".map-hex-container",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            y: 100,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        // Animate the left L-shaped line
+        gsap.to(".line-left", {
+            scrollTrigger: {
+                trigger: ".map-hex-container",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            },
+            strokeDashoffset: 0,
+            opacity: 1,
+            duration: 2,
+            ease: "power2.out",
+            delay: 0.5
+        });
+
+        // Animate the right L-shaped line
+        gsap.to(".line-right", {
+            scrollTrigger: {
+                trigger: ".map-hex-container",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            },
+            strokeDashoffset: 0,
+            opacity: 1,
+            duration: 2,
+            ease: "power2.out",
+            delay: 1
+        });
+
+        // Animate connection points in SVG
+        gsap.to(".connection-point-left, .connection-point-right", {
+            scrollTrigger: {
+                trigger: ".map-hex-container",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 1,
+            scale: 1,
+            duration: 1,
+            ease: "back.out(1.7)",
+            delay: 2
+        });
+
+        // Animate sparkles in SVG
+        gsap.to(".sparkle-1, .sparkle-2, .sparkle-3, .sparkle-4", {
+            scrollTrigger: {
+                trigger: ".map-hex-container",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "back.out(1.7)",
+            delay: 2.5
+        });
+
+        // Animate moving dots
+        gsap.to(".moving-dot", {
+            scrollTrigger: {
+                trigger: ".map-hex-container",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 1,
+            scale: 1,
+            duration: 1,
+            ease: "back.out(1.7)",
+            delay: 3
+        });
+
+        // Animate map wrapper
+        gsap.from(".map-wrapper", {
+            scrollTrigger: {
+                trigger: ".map-hex-container",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            x: -100,
+            scale: 0.9,
+            duration: 1.5,
+            ease: "power3.out",
+            delay: 0.3
+        });
+
+        // Animate hex container
+        gsap.from(".hex-container", {
+            scrollTrigger: {
+                trigger: ".map-hex-container",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            x: 100,
+            scale: 0.9,
+            duration: 1.5,
+            ease: "power3.out",
+            delay: 0.6
+        });
+
+        // Hover animations for interactive elements
+        gsap.utils.toArray(".uzbekistan-map, .hex-container").forEach(element => {
+            element.addEventListener("mouseenter", () => {
+                gsap.to(element, {
+                    scale: 1.02,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+                
+                // Highlight connecting lines on hover
+                if (element.classList.contains('uzbekistan-map')) {
+                    gsap.to(".connecting-line", {
+                        strokeWidth: 6,
+                        filter: "drop-shadow(0 0 15px rgba(88, 41, 89, 0.8))",
+                        duration: 0.3
+                    });
+                }
+            });
+
+            element.addEventListener("mouseleave", () => {
+                gsap.to(element, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+                
+                // Reset connecting lines
+                if (element.classList.contains('uzbekistan-map')) {
+                    gsap.to(".connecting-line", {
+                        strokeWidth: 4,
+                        filter: "drop-shadow(0 0 10px rgba(88, 41, 89, 0.6))",
+                        duration: 0.3
+                    });
+                }
+            });
+        });
+
+        // Continuous sparkle animation for SVG sparkles
+        gsap.to(".sparkle-1, .sparkle-2, .sparkle-3, .sparkle-4", {
+            y: -30,
+            opacity: 0,
+            scale: 0,
+            duration: 2,
+            stagger: 0.5,
+            repeat: -1,
+            ease: "power2.out",
+            delay: 3
+        });
+
+        // Pulse animation for connection points
+        gsap.to(".connection-point-left, .connection-point-right", {
+            scale: 1.2,
+            duration: 1,
+            repeat: -1,
+            yoyo: true,
+            ease: "power2.inOut",
+            delay: 3
+        });
+
+        // Pulse animation for moving dots
+        gsap.to(".moving-dot", {
+            scale: 1.3,
+            duration: 0.8,
+            repeat: -1,
+            yoyo: true,
+            ease: "power2.inOut",
+            delay: 3.5
+        });
+
+        // Continuous glow animation for moving dots
+        gsap.to(".moving-dot", {
+            filter: "drop-shadow(0 0 15px #51C9C2)",
+            duration: 1,
+            repeat: -1,
+            yoyo: true,
+            ease: "power2.inOut",
+            delay: 4
+        });
+
+        // Spinner functionality for map click
+        const mapLink = document.querySelector('.map-wrapper a');
+        const spinnerOverlay = document.getElementById('spinnerOverlay');
+        const spinnerText = document.querySelector('.spinner-text');
+
+        if (mapLink) {
+            mapLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetUrl = this.href;
+                
+                // Show spinner
+                spinnerOverlay.classList.add('active');
+                
+                // Animate spinner entrance
+                gsap.fromTo(spinnerOverlay, 
+                    { opacity: 0, scale: 0.8 },
+                    { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.7)" }
+                );
+                
+                // Animate spinner elements
+                gsap.fromTo('.spinner-ring', 
+                    { rotation: 0, scale: 0 },
+                    { rotation: 360, scale: 1, duration: 0.5, stagger: 0.1, ease: "back.out(1.7)" }
+                );
+                
+                gsap.fromTo('.spinner-core', 
+                    { scale: 0, opacity: 0 },
+                    { scale: 1, opacity: 1, duration: 0.5, delay: 0.3, ease: "elastic.out(1, 0.5)" }
+                );
+                
+                gsap.fromTo('.spinner-text', 
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.5, delay: 0.4, ease: "power2.out" }
+                );
+                
+                gsap.fromTo('.particle', 
+                    { scale: 0, opacity: 0 },
+                    { scale: 1, opacity: 1, duration: 0.3, stagger: 0.1, delay: 0.5, ease: "back.out(1.7)" }
+                );
+                
+                // Wait 1.5 seconds then open link
+                setTimeout(() => {
+                    // Animate spinner exit
+                    gsap.to(spinnerOverlay, {
+                        opacity: 0,
+                        scale: 1.1,
+                        duration: 0.3,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            spinnerOverlay.classList.remove('active');
+                            window.open(targetUrl, '_blank');
+                        }
+                    });
+                }, 1500);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Parallax effect on scroll
+            const section = document.getElementById('karshi-city-section');
+            const orbs = section.querySelectorAll('.gradient-orb');
+            const imageFrame = section.querySelector('.image-frame');
+            
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rect = section.getBoundingClientRect();
+                const inView = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (inView) {
+                    const parallaxSpeed = scrolled * 0.5;
+                    
+                    orbs.forEach((orb, index) => {
+                        const speed = (index + 1) * 0.1;
+                        orb.style.transform = `translateY(${parallaxSpeed * speed}px)`;
+                    });
+                }
+            });
+            
+            // Magnetic hover effect on cards
+            const cards = section.querySelectorAll('.info-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const deltaX = (x - centerX) / centerX;
+                    const deltaY = (y - centerY) / centerY;
+                    
+                    card.style.transform = `
+                        perspective(1000px)
+                        rotateX(${deltaY * -5}deg)
+                        rotateY(${deltaX * 5}deg)
+                        translateY(-8px)
+                        scale(1.02)
+                    `;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                });
+            });
+            
+            // Smooth number counting animation
+            const animateValue = (element, start, end, duration) => {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    element.innerHTML = Math.floor(progress * (end - start) + start);
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            };
+            
+            // Intersection Observer for reveal animations
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -100px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe animated elements
+            const animatedElements = section.querySelectorAll('.info-card, .accent-section');
+            animatedElements.forEach(el => {
+                el.style.animationPlayState = 'paused';
+                observer.observe(el);
+            });
+            
+            // Premium hover effect on accent button
+            const accentButton = section.querySelector('.accent-button');
+            
+            accentButton.addEventListener('mouseenter', function(e) {
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.width = '200%';
+                ripple.style.height = '200%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.transform = 'translate(-50%, -50%) scale(0)';
+                ripple.style.top = '50%';
+                ripple.style.left = '50%';
+                ripple.style.transition = 'transform 0.6s ease-out, opacity 0.6s ease-out';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.style.transform = 'translate(-50%, -50%) scale(1)';
+                    ripple.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+            
+            // Image tilt effect
+            imageFrame.addEventListener('mousemove', (e) => {
+                const rect = imageFrame.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const deltaX = (x - centerX) / centerX;
+                const deltaY = (y - centerY) / centerY;
+                
+                const badge1 = section.querySelector('.badge-1');
+                const badge2 = section.querySelector('.badge-2');
+                
+                if (badge1) badge1.style.transform = `translate(${deltaX * 20}px, ${deltaY * 20}px)`;
+                if (badge2) badge2.style.transform = `translate(${deltaX * -15}px, ${deltaY * -15}px)`;
+            });
+            
+            imageFrame.addEventListener('mouseleave', () => {
+                const badges = section.querySelectorAll('.info-badge');
+                badges.forEach(badge => {
+                    badge.style.transform = 'translate(0, 0)';
+                });
+            });
+            
+            // Smooth scroll to section
+            if (window.location.hash === '#karshi-city-section') {
+                setTimeout(() => {
+                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+            
+            // Add subtle animation to decoration grids
+            const decorationGrids = section.querySelectorAll('.decoration-grid');
+            decorationGrids.forEach((grid, index) => {
+                grid.style.animation = `rotate 20s linear infinite`;
+                grid.style.animationDelay = `${index * 2}s`;
+            });
+            
+            // Add rotate animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes rotate {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Click ripple effect on cards
+            cards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.position = 'absolute';
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.style.background = 'rgba(230, 217, 226, 0.3)';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.animation = 'rippleEffect 0.8s ease-out';
+                    ripple.style.pointerEvents = 'none';
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => ripple.remove(), 800);
+                });
+            });
+            
+            // Add ripple animation if not already added
+            if (!document.querySelector('#ripple-style')) {
+                const rippleStyle = document.createElement('style');
+                rippleStyle.id = 'ripple-style';
+                rippleStyle.textContent = `
+                    @keyframes rippleEffect {
+                        to {
+                            transform: scale(4);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(rippleStyle);
+            }
+        });
+        document.getElementById('exploreMoreBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetUrl = 'https://uzbekistan.travel/en/i/karshi-en/';
+            const overlay = document.getElementById('loadingOverlay');
+            
+            // Show full-page loading overlay
+            overlay.classList.add('active');
+            
+            // Redirect after 1.5 seconds
+            setTimeout(function() {
+                window.location.href = targetUrl;
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

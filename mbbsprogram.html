@@ -1,0 +1,2622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBBS Program - Karshi State University</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            background: #f8f9fa;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        .mbbs-program {
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header Section */
+        .program-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .header-icon {
+            font-size: 2.5rem;
+            color: #3498db;
+            margin-bottom: 15px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .header-icon::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #3498db;
+            border-radius: 3px;
+        }
+
+        .program-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .program-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #3498db;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.8s ease;
+        }
+
+        .program-header.animate-in .program-title::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .university-badge {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease 0.3s;
+        }
+
+        .program-header.animate-in .university-badge {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(52, 152, 219, 0.1);
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        .info-card.animate-in {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: #3498db;
+            transition: height 0.4s ease;
+        }
+
+        .info-card:hover::before {
+            height: 100%;
+        }
+
+        .card-icon {
+            font-size: 1.3rem;
+            color: #3498db;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover .card-icon {
+            transform: scale(1.1);
+        }
+
+        .card-content h3 {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* Duration Card */
+        .duration-main {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #3498db;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .duration-sub {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        /* Eligibility Card */
+        .eligibility-list {
+            list-style: none;
+        }
+
+        .eligibility-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px dashed #ecf0f1;
+        }
+
+        .eligibility-list li:last-child {
+            border-bottom: none;
+        }
+
+        .eligibility-list li i {
+            color: #3498db;
+            font-size: 0.9rem;
+        }
+
+        /* Intake Card */
+        .intake-months {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .month-pill {
+            background: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .month-pill:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .intake-note {
+            color: #7f8c8d;
+            font-size: 0.8rem;
+        }
+
+        /* Language Card */
+        .language-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f1f9fe;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        /* Internship Card */
+        .internship-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+        }
+
+        .internship-features li i {
+            color: #3498db;
+            font-size: 0.9rem;
+        }
+
+        /* Recognition Card */
+        .recognition-logos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .logo-item {
+            background: #f1f9fe;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        .logo-item:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .approval-text {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        .approval-text i {
+            color: #3498db;
+        }
+
+        /* Curriculum Section */
+        .curriculum-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            margin-left: 0;
+            margin-right: 60px;
+        }
+
+        .curriculum-section.animate-in {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .curriculum-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #3498db;
+        }
+
+        .curriculum-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .curriculum-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .curriculum-icon {
+            font-size: 1.8rem;
+            color: #3498db;
+        }
+
+        .curriculum-circle {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 20px auto;
+        }
+
+        .phase-item {
+            position: absolute;
+            width: 130px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        .phase-item.pre-clinical {
+            top: 0;
+            left: 40%;
+            transform: translate(-50%, 0);
+        }
+
+        .phase-item.para-clinical {
+            bottom: 18px;
+            right: -70px;
+            transform: none;
+        }
+
+        .phase-item.clinical {
+            bottom: 18px;
+            left: 18px;
+            transform: none;
+        }
+
+        .phase-number {
+            width: 24px;
+            height: 24px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 auto 6px;
+            transition: all 0.3s ease;
+        }
+
+        .phase-item span {
+            font-size: 0.92rem;
+        }
+
+        .phase-item:hover {
+            transform: translate(-50%, -5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.2);
+        }
+
+        .phase-item:hover .phase-number {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .curriculum-circle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            border: 2px dashed rgba(52, 152, 219, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .curriculum-content {
+            flex: none;
+            display: block;
+            justify-content: flex-start;
+            align-items: flex-start;
+            width: auto;
+            max-width: none;
+            margin-top: 0;
+            margin-left: -30px;
+        }
+
+        /* Clinical Training */
+        .clinical-training {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        .clinical-training.animate-in {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .clinical-training h3 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .clinical-training h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #3498db;
+            border-radius: 3px;
+        }
+
+        .training-list {
+            list-style: none;
+        }
+
+        .training-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px dashed #ecf0f1;
+        }
+
+        .training-list li:last-child {
+            border-bottom: none;
+        }
+
+        .training-list li i {
+            color: #3498db;
+            font-size: 1.1rem;
+        }
+
+        /* Faculty Section */
+        .faculty-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        .faculty-section.animate-in {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .faculty-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .faculty-left h3 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .faculty-left h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #3498db;
+            border-radius: 3px;
+        }
+
+        .faculty-features {
+            list-style: none;
+        }
+
+        .faculty-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+        }
+
+        .faculty-features li i {
+            color: #3498db;
+            font-size: 1.1rem;
+        }
+
+        .exam-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .exam-badge {
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .exam-badge.next {
+            background: #3498db;
+            color: white;
+        }
+
+        .exam-badge.fmge {
+            background: #f1f9fe;
+            color: #2c3e50;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .exam-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .program-title {
+                font-size: 2.2rem;
+            }
+            
+            .faculty-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .exam-badges {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .program-title {
+                font-size: 1.8rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .curriculum-circle {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .phase-number {
+                width: 22px;
+                height: 22px;
+                font-size: 0.75rem;
+                margin-bottom: 4px;
+            }
+            .phase-item span {
+                font-size: 0.75rem;
+            }
+            
+            .phase-item.pre-clinical {
+                top: 0;
+                left: 50%;
+                transform: translate(-50%, 0);
+            }
+            
+            .phase-item.para-clinical {
+                bottom: 10px;
+                right: 10px;
+                transform: none;
+            }
+            
+            .phase-item.clinical {
+                bottom: 10px;
+                left: 10px;
+                transform: none;
+            }
+            
+            .curriculum-circle::before {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .program-header {
+                margin-bottom: 40px;
+            }
+            
+            .program-title {
+                font-size: 1.6rem;
+            }
+            
+            .header-icon {
+                font-size: 2.8rem;
+            }
+            
+            .curriculum-section,
+            .clinical-training,
+            .faculty-section {
+                padding: 30px 20px;
+            }
+            
+            .intake-months {
+                flex-direction: column;
+            }
+        }
+
+        .curriculum-content, .intake-integration {
+            flex: 0 1 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 320px;
+            min-width: 220px;
+        }
+
+        .curriculum-circle, .intake-card-round {
+            /* Remove margin: 0 auto; */
+        }
+
+        @media (max-width: 900px) {
+            .curriculum-section {
+                margin-right: 0;
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+            .curriculum-content, .intake-integration {
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+                justify-content: center;
+            }
+            .curriculum-content {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+
+        /* Intake Card Integration */
+        .intake-card-round {
+            background: white;
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 3px solid rgba(52, 152, 219, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .intake-card-round::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                #3498db 0% 25%,
+                #f1f9fe 25% 50%,
+                #3498db 50% 75%,
+                #f1f9fe 75% 100%
+            );
+            z-index: 0;
+            animation: rotate 8s linear infinite;
+            opacity: 0.1;
+        }
+
+        .intake-card-round:hover::before {
+            animation: rotate 4s linear infinite;
+        }
+
+        .intake-card-round .card-content {
+            position: relative;
+            z-index: 1;
+            background: white;
+            border-radius: 50%;
+            width: 190px;
+            height: 190px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .intake-card-round .card-icon {
+            font-size: 1.5rem;
+            color: #3498db;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .intake-card-round h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .intake-months-round {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .month-pill-round {
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            transform: scale(0.95);
+            opacity: 0.9;
+        }
+
+        .intake-card-round:hover .month-pill-round {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .month-pill-round:nth-child(1) {
+            align-self: flex-start;
+        }
+
+        .month-pill-round:nth-child(2) {
+            align-self: flex-end;
+        }
+
+        .intake-note-round {
+            font-size: 0.7rem;
+            color: #7f8c8d;
+            margin-top: 8px;
+        }
+
+        /* Animations */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float-up {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .phase-item {
+            animation: float-up 4s ease-in-out infinite;
+        }
+
+        .phase-item.pre-clinical {
+            animation-delay: 0.2s;
+        }
+
+        .phase-item.para-clinical {
+            animation-delay: 0.4s;
+        }
+
+        .phase-item.clinical {
+            animation-delay: 0.6s;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .curriculum-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .intake-integration {
+                order: -1;
+                margin-bottom: 30px;
+            }
+            
+            .curriculum-circle {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .intake-card-round {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .intake-card-round .card-content {
+                width: 170px;
+                height: 170px;
+            }
+        }
+
+
+        .curriculum-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f1f9fe 100%);
+    border-radius: 15px;
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    transform: translateY(50px);
+    opacity: 0;
+    transition: all 0.6s ease;
+}
+
+.curriculum-section.animate-in {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.curriculum-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.curriculum-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.curriculum-header h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #2c3e50;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.curriculum-icon {
+    font-size: 1.8rem;
+    color: #3498db;
+    animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.curriculum-circle {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 20px auto;
+    background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.curriculum-circle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 220px;
+    height: 220px;
+    border: 3px solid transparent;
+    border-top-color: #3498db;
+    border-right-color: #e74c3c;
+    border-bottom-color: #2ecc71;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: rotateBorder 8s linear infinite;
+    box-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+}
+
+@keyframes rotateBorder {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.phase-item {
+    position: absolute;
+    width: 100px;
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff 0%, #f9fbfd 100%);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(52, 152, 219, 0.2);
+    transition: all 0.4s ease;
+    animation: floatUp 4s ease-in-out infinite;
+}
+
+.phase-item.pre-clinical {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: 0.2s;
+}
+
+.phase-item.para-clinical {
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    animation-delay: 0.4s;
+}
+
+.phase-item.clinical {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: 0.6s;
+}
+
+.phase-number {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 auto 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+}
+
+.phase-item:hover {
+    transform: translate(-50%, -10px) scale(1.1);
+    box-shadow: 0 12px 30px rgba(52, 152, 219, 0.3);
+}
+
+.phase-item.para-clinical:hover {
+    transform: translateY(-10px) scale(1.1);
+}
+
+.phase-item.clinical:hover {
+    transform: translateX(-50%) translateY(10px) scale(1.1);
+}
+
+.phase-item:hover .phase-number {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
+}
+
+@keyframes floatUp {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.intake-integration {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.intake-card-round {
+    background: transparent;
+    border-radius: 50%;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    border: 4px solid #3498db;
+    box-shadow: 0 0 20px rgba(52, 152, 219, 0.2);
+}
+
+.intake-card-round::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
+    z-index: 0;
+    animation: glow 6s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.intake-card-round .card-content {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, #ffffff 0%, #f9fbfd 100%);
+    border-radius: 50%;
+    width: 210px;
+    height: 210px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid rgba(52, 152, 219, 0.1);
+    box-shadow: inset 0 0 15px rgba(52, 152, 219, 0.1);
+}
+
+.intake-card-round .card-icon {
+    font-size: 1.8rem;
+    color: #3498db;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+    animation: bounce 2s infinite alternate;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-5px); }
+}
+
+.intake-card-round h3 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    color: #2c3e50;
+    font-weight: 600;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.intake-months-round {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.month-pill-round {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+    transform: scale(1);
+    position: relative;
+    overflow: hidden;
+}
+
+.month-pill-round::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shine 2s infinite;
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    20% { left: 100%; }
+    100% { left: 100%; }
+}
+
+.month-pill-round:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.5);
+}
+
+.month-pill-round:nth-child(1) {
+    align-self: flex-start;
+    margin-left: 20px;
+}
+
+.month-pill-round:nth-child(2) {
+    align-self: flex-end;
+    margin-right: 20px;
+}
+
+@media (max-width: 768px) {
+    .curriculum-section {
+        grid-template-columns: 1fr;
+    }
+
+    .intake-integration {
+        order: -1;
+        margin-bottom: 30px;
+    }
+
+    .curriculum-circle {
+        width: 250px;
+        height: 250px;
+    }
+
+    .intake-card-round {
+        width: 200px;
+        height: 200px;
+    }
+
+    .intake-card-round .card-content {
+        width: 190px;
+        height: 190px;
+    }
+}
+
+@media (max-width: 576px) {
+    .curriculum-section {
+        padding: 20px;
+    }
+
+    .curriculum-circle {
+        width: 220px;
+        height: 220px;
+    }
+
+    .intake-card-round {
+        width: 180px;
+        height: 180px;
+    }
+
+    .intake-card-round .card-content {
+        width: 170px;
+        height: 170px;
+    }
+}
+
+    /* Main Container - Unique ID */
+    #med-curriculum-container {
+            display: flex;
+            max-width: 1000px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin: 20px auto;
+        }
+
+        /* Left Section - Curriculum Phases */
+        #med-curriculum-left {
+            flex: 1;
+            padding: 40px;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        /* Right Section - Intake Info */
+        #med-curriculum-right {
+            width: 360px;
+            padding: 40px;
+            background-color: #fafbfc;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100%;
+        }
+
+        /* Header Styles */
+        #med-curriculum-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        #med-curriculum-icon {
+            width: 48px;
+            height: 48px;
+            background-color: #4a6fa5;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        #med-curriculum-header h2 {
+            font-size: 24px;
+            color: #2d3436;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* Phase Items */
+        .med-phase-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .med-phase-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .med-phase-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-color: #4a6fa5;
+        }
+
+        .med-phase-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .med-phase-1 .med-phase-number {
+            background-color: #6c8ebf;
+        }
+
+        .med-phase-2 .med-phase-number {
+            background-color: #82b6d9;
+        }
+
+        .med-phase-3 .med-phase-number {
+            background-color: #9a9cce;
+        }
+
+        .med-phase-info {
+            flex: 1;
+        }
+
+        .med-phase-info h3 {
+            font-size: 16px;
+            color: #2d3436;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .med-phase-info p {
+            font-size: 14px;
+            color: #555555;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Intake Section */
+        #med-intake-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        #med-intake-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #4a6fa5;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        #med-intake-header h3 {
+            font-size: 18px;
+            color: #2d3436;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .med-intake-timeline {
+            position: relative;
+            margin-top: 20px;
+            padding-left: 30px;
+            border-left: 3px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: auto;
+            min-height: 220px;
+        }
+        .med-intake-spacer {
+            height: 40px; /* Reduced for a tighter gap */
+            min-height: 20px;
+            width: 1px;
+            align-self: stretch;
+        }
+        .med-intake-step {
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+            min-height: 70px;
+            margin-bottom: 0;
+        }
+        .med-intake-step:first-child::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 38px;
+            width: 0;
+            height: 0;
+            border-left: 3px dashed #7a9cc6;
+            z-index: 0;
+            transition: height 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            animation: medLineGrow 1s 0.3s forwards;
+        }
+        .med-intake-step:last-child::after {
+            display: none;
+        }
+        .med-intake-dot {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7a9cc6 60%, #9a9cce 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            box-shadow: 0 2px 8px rgba(122,156,198,0.15);
+            position: absolute;
+            left: -19px;
+            top: 0;
+            z-index: 1;
+            border: 3px solid #fff;
+        }
+        .med-dot-september {
+            background: linear-gradient(135deg, #7a9cc6 60%, #4a6fa5 100%);
+        }
+        .med-dot-february {
+            background: linear-gradient(135deg, #9a9cce 60%, #82b6d9 100%);
+        }
+        .med-intake-content {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(74,111,165,0.07);
+            padding: 18px 22px 14px 22px;
+            margin-left: 30px;
+            min-width: 240px;
+            max-width: 320px;
+            border-left: 4px solid #f0f4fa;
+            transition: box-shadow 0.3s;
+        }
+        .med-intake-step:hover .med-intake-content {
+            box-shadow: 0 6px 18px rgba(74,111,165,0.13);
+            border-left: 4px solid #4a6fa5;
+        }
+        .med-intake-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 6px;
+        }
+        .med-intake-desc {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #med-curriculum-container {
+                flex-direction: column;
+            }
+            
+            #med-curriculum-left, #med-curriculum-right {
+                width: 100%;
+            }
+            
+            #med-curriculum-left {
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            .med-intake-timeline {
+                height: auto;
+                min-height: 120px;
+            }
+            .med-intake-content {
+                min-width: 0;
+                max-width: 100%;
+                padding: 14px 12px 10px 16px;
+            }
+            .med-intake-step {
+                min-height: 60px;
+            }
+            .med-intake-step:first-child::after {
+                height: calc(100% + 25px - 38px);
+            }
+        }
+
+        /* Animation Classes */
+        .med-fade-in {
+            opacity: 0;
+            transform: translateY(30px) scale(0.98);
+            animation: medFadeInSlide 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        @keyframes medFadeInSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.98);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-8px) scale(1.03);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .med-intake-step .med-intake-dot {
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s;
+        }
+        .med-intake-step:hover .med-intake-dot {
+            transform: scale(1.15) rotate(-8deg);
+            box-shadow: 0 0 18px 0 #7a9cc6a0;
+        }
+        .med-intake-dot i {
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            display: inline-block;
+        }
+        .med-intake-step:hover .med-intake-dot i {
+            animation: medIconBounce 0.7s;
+        }
+        @keyframes medIconBounce {
+            0% { transform: scale(1) rotate(0deg); }
+            30% { transform: scale(1.25) rotate(-10deg); }
+            50% { transform: scale(0.95) rotate(8deg); }
+            70% { transform: scale(1.1) rotate(-6deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        @keyframes medLineGrow {
+            0% { height: 0; }
+            100% { height: calc(100% + 120px - 38px); }
+        }
+
+        #medical-education-unique-wrapper {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            background: #0a0e1a;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            width: 100vw;
+        }
+
+        #medical-education-unique-wrapper .med-section {
+            margin-bottom: 120px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        #medical-education-unique-wrapper .med-section.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #medical-education-unique-wrapper .med-section-header {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        #medical-education-unique-wrapper .med-section-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        #medical-education-unique-wrapper .med-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background: #00d4ff;
+            transition: width 0.8s ease;
+        }
+
+        #medical-education-unique-wrapper .med-section.animate .med-section-title::after {
+            width: 100px;
+        }
+
+        #medical-education-unique-wrapper .med-section-subtitle {
+            font-size: 1.2rem;
+            color: #8892b0;
+            font-weight: 300;
+        }
+
+        #medical-education-unique-wrapper .med-clinical-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        #medical-education-unique-wrapper .med-clinical-card {
+            background: rgba(20, 30, 50, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        #medical-education-unique-wrapper .med-section.animate .med-clinical-card {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        #medical-education-unique-wrapper .med-clinical-card:nth-child(1) { transition-delay: 0.2s; }
+        #medical-education-unique-wrapper .med-clinical-card:nth-child(2) { transition-delay: 0.4s; }
+        #medical-education-unique-wrapper .med-clinical-card:nth-child(3) { transition-delay: 0.6s; }
+
+        #medical-education-unique-wrapper .med-clinical-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        #medical-education-unique-wrapper .med-clinical-card:hover::before {
+            left: 100%;
+        }
+
+        #medical-education-unique-wrapper .med-clinical-card:hover {
+            transform: translateY(-10px);
+            border-color: #00d4ff;
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        #medical-education-unique-wrapper .med-card-icon {
+            font-size: 2.1rem;
+            color: #00d4ff;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        #medical-education-unique-wrapper .med-card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        #medical-education-unique-wrapper .med-card-description {
+            color: #8892b0;
+            line-height: 1.6;
+            font-size: 0.98rem;
+        }
+
+        #medical-education-unique-wrapper .med-faculty-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        #medical-education-unique-wrapper .med-faculty-content {
+            transform: translateX(-50px);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        #medical-education-unique-wrapper .med-section.animate .med-faculty-content {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        #medical-education-unique-wrapper .med-faculty-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        #medical-education-unique-wrapper .med-faculty-list {
+            list-style: none;
+            margin-bottom: 40px;
+            padding: 0;
+        }
+
+        #medical-education-unique-wrapper .med-faculty-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(136, 146, 176, 0.2);
+            color: #8892b0;
+            font-size: 1.2rem;
+            position: relative;
+            padding-left: 30px;
+            transition: all 0.3s ease;
+        }
+
+        #medical-education-unique-wrapper .med-faculty-list li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #00d4ff;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+
+        #medical-education-unique-wrapper .med-section.animate .med-faculty-list li::before {
+            transform: scale(1);
+            transition-delay: calc(var(--i) * 0.1s);
+        }
+
+        #medical-education-unique-wrapper .med-faculty-list li:hover {
+            color: #ffffff;
+            padding-left: 40px;
+        }
+
+        #medical-education-unique-wrapper .med-exam-prep {
+            transform: translateX(50px);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        #medical-education-unique-wrapper .med-section.animate .med-exam-prep {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        #medical-education-unique-wrapper .med-exam-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        #medical-education-unique-wrapper .med-exam-badge {
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid #00d4ff;
+            border-radius: 15px;
+            padding: 18px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform: rotateY(90deg);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        #medical-education-unique-wrapper .med-section.animate .med-exam-badge {
+            transform: rotateY(0deg);
+            opacity: 1;
+        }
+
+        #medical-education-unique-wrapper .med-exam-badge:nth-child(1) { transition-delay: 0.3s; }
+        #medical-education-unique-wrapper .med-exam-badge:nth-child(2) { transition-delay: 0.5s; }
+
+        #medical-education-unique-wrapper .med-exam-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            animation: med-rotate 4s linear infinite;
+            opacity: 0;
+        }
+
+        #medical-education-unique-wrapper .med-exam-badge:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes med-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #medical-education-unique-wrapper .med-exam-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #00d4ff;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #medical-education-unique-wrapper .med-exam-subtitle {
+            color: #8892b0;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        #medical-education-unique-wrapper .med-exam-logo {
+            width: 38px;
+            height: 38px;
+            margin: 0 auto 8px;
+            display: block;
+            position: relative;
+            z-index: 1;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #medical-education-unique-wrapper .med-section-title {
+                font-size: 2.5rem;
+            }
+
+            #medical-education-unique-wrapper .med-clinical-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            #medical-education-unique-wrapper .med-faculty-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            #medical-education-unique-wrapper .med-faculty-title {
+                font-size: 2.2rem;
+            }
+
+            #medical-education-unique-wrapper .med-exam-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Floating Animation */
+        @keyframes med-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #medical-education-unique-wrapper .med-clinical-card:hover {
+            animation: med-float 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <section class="mbbs-program">
+        <div class="container">
+            <!-- Header -->
+            <div class="program-header">
+                <div class="header-icon">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <h1 class="program-title">MBBS Program Overview</h1>
+                <div class="university-badge">
+                    <span>Karshi State University</span>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="content-grid">
+                <!-- Duration & Language Card (Merged) -->
+                <div class="info-card duration-language-card">
+                    <div class="card-icon" style="font-size:1.3rem;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Program Duration</h3>
+                        <div class="duration-info">
+                            <span class="duration-main" style="font-size:1.5rem;">6 Years</span>
+                            <span class="duration-sub" style="font-size:0.95rem;">Includes 1-year internship</span>
+                        </div>
+                        <hr style="margin:18px 0; border:0; border-top:1px solid #eee;">
+                        <div class="card-icon" style="font-size:1.1rem; margin-bottom:8px;">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 style="font-size:1.1rem; margin-bottom:8px;">Medium of Instruction</h3>
+                        <div class="language-badge" style="font-size:0.95rem; padding:8px 12px;">
+                            <i class="fas fa-comments"></i>
+                            <span>Fully in English</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Eligibility Card -->
+                <div class="info-card eligibility-card">
+                    <div class="card-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Eligibility Criteria</h3>
+                        <ul class="eligibility-list">
+                            <li><i class="fas fa-flask"></i> 10+2 with Physics, Chemistry, Biology (min 50%)</li>
+                            <li><i class="fas fa-certificate"></i> NEET Qualified (for Indian students)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Intake Card -->
+             
+
+                <!-- Internship Card -->
+                <div class="info-card internship-card">
+                    <div class="card-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Internship Program</h3>
+                        <ul class="internship-features">
+                            <li><i class="fas fa-map-marker-alt"></i> Can be completed in Uzbekistan</li>
+                            <li><i class="fas fa-hand-holding-usd"></i> No donation required</li>
+                            <li><i class="fas fa-file-alt"></i> No entrance exam required</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Recognition Card -->
+                <div class="info-card recognition-card">
+                    <div class="card-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Recognition & Accreditation</h3>
+                        <div class="recognition-logos">
+                            <div class="logo-item">WHO</div>
+                            <div class="logo-item">ECFMG</div>
+                            <div class="logo-item">WFME</div>
+                            <div class="logo-item">NMC</div>
+                        </div>
+                        <div class="approval-text">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Approved by Ministry of Higher Education & Health, Uzbekistan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Curriculum Section -->
+            <div id="med-curriculum-container">
+                <div id="med-curriculum-left">
+                    <div id="med-curriculum-header">
+                        <div id="med-curriculum-icon">
+                            <i class="fas fa-book-medical"></i>
+                        </div>
+                        <h2>Curriculum Overview</h2>
+                    </div>
+                    
+                    <div class="med-phase-item med-phase-1 med-fade-in" style="animation-delay: 0.1s;">
+                        <div class="med-phase-number">1</div>
+                        <div class="med-phase-info">
+                            <h3>Pre-clinical</h3>
+                            <p>Foundation studies in basic medical sciences</p>
+                        </div>
+                    </div>
+                    
+                    <div class="med-phase-item med-phase-2 med-fade-in" style="animation-delay: 0.2s;">
+                        <div class="med-phase-number">2</div>
+                        <div class="med-phase-info">
+                            <h3>Para-clinical</h3>
+                            <p>Intermediate studies bridging theory and practice</p>
+                        </div>
+                    </div>
+                    
+                    <div class="med-phase-item med-phase-3 med-fade-in" style="animation-delay: 0.3s;">
+                        <div class="med-phase-number">3</div>
+                        <div class="med-phase-info">
+                            <h3>Clinical</h3>
+                            <p>Hands-on training in hospital and clinical settings</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="med-curriculum-right">
+                    <div id="med-intake-header">
+                        <div id="med-intake-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>Intake Months</h3>
+                    </div>
+                    <div class="med-intake-timeline">
+                        <div class="med-intake-step med-fade-in" style="animation-delay: 0.4s;">
+                            <div class="med-intake-dot med-dot-september"><i class="fas fa-leaf"></i></div>
+                            <div class="med-intake-content">
+                                <div class="med-intake-title">September Intake</div>
+                                <div class="med-intake-desc">Kickstart your journey in the vibrant fall semester. Ideal for fresh high school graduates.</div>
+                            </div>
+                        </div>
+                        <div class="med-intake-spacer"></div>
+                        <div class="med-intake-step med-fade-in" style="animation-delay: 0.5s;">
+                            <div class="med-intake-dot med-dot-february"><i class="fas fa-snowflake"></i></div>
+                            <div class="med-intake-content">
+                                <div class="med-intake-title">February Intake</div>
+                                <div class="med-intake-desc">Begin your studies in the spring. Perfect for those seeking a flexible start date.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Clinical Training Section -->
+             <!-- Medical Education Excellence Section - Unique IDs for Integration -->
+<div id="medical-education-unique-wrapper">
+    <style>
+        #medical-education-unique-wrapper {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            background: #0a0e1a;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            width: 100vw;
+        }
+
+        #medical-education-unique-wrapper *,
+        #medical-education-unique-wrapper *::before,
+        #medical-education-unique-wrapper *::after {
+            box-sizing: border-box;
+        }
+
+        #medical-education-unique-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        #medical-education-unique-wrapper .med-section {
+            margin-bottom: 120px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        #medical-education-unique-wrapper .med-section.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #medical-education-unique-wrapper .med-section-header {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        #medical-education-unique-wrapper .med-section-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        #medical-education-unique-wrapper .med-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background: #00d4ff;
+            transition: width 0.8s ease;
+        }
+
+        #medical-education-unique-wrapper .med-section.animate .med-section-title::after {
+            width: 100px;
+        }
+
+        #medical-education-unique-wrapper .med-section-subtitle {
+            font-size: 1.2rem;
+            color: #8892b0;
+            font-weight: 300;
+        }
+
+        /* Clinical Training Section */
+        #medical-education-unique-wrapper .med-clinical-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        #medical-education-unique-wrapper .med-clinical-card {
+            background: rgba(20, 30, 50, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        #medical-education-unique-wrapper .med-section.animate .med-clinical-card {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        #medical-education-unique-wrapper .med-clinical-card:nth-child(1) { transition-delay: 0.2s; }
+        #medical-education-unique-wrapper .med-clinical-card:nth-child(2) { transition-delay: 0.4s; }
+        #medical-education-unique-wrapper .med-clinical-card:nth-child(3) { transition-delay: 0.6s; }
+
+        #medical-education-unique-wrapper .med-clinical-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        #medical-education-unique-wrapper .med-clinical-card:hover::before {
+            left: 100%;
+        }
+
+        #medical-education-unique-wrapper .med-clinical-card:hover {
+            transform: translateY(-10px);
+            border-color: #00d4ff;
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        #medical-education-unique-wrapper .med-card-icon {
+            font-size: 2.1rem;
+            color: #00d4ff;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        #medical-education-unique-wrapper .med-card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        #medical-education-unique-wrapper .med-card-description {
+            color: #8892b0;
+            line-height: 1.6;
+            font-size: 0.98rem;
+        }
+
+        /* Faculty Section */
+        #medical-education-unique-wrapper .med-faculty-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        #medical-education-unique-wrapper .med-faculty-content {
+            transform: translateX(-50px);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        #medical-education-unique-wrapper .med-section.animate .med-faculty-content {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        #medical-education-unique-wrapper .med-faculty-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        #medical-education-unique-wrapper .med-faculty-list {
+            list-style: none;
+            margin-bottom: 40px;
+            padding: 0;
+        }
+
+        #medical-education-unique-wrapper .med-faculty-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(136, 146, 176, 0.2);
+            color: #8892b0;
+            font-size: 1.2rem;
+            position: relative;
+            padding-left: 30px;
+            transition: all 0.3s ease;
+        }
+
+        #medical-education-unique-wrapper .med-faculty-list li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #00d4ff;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+
+        #medical-education-unique-wrapper .med-section.animate .med-faculty-list li::before {
+            transform: scale(1);
+            transition-delay: calc(var(--i) * 0.1s);
+        }
+
+        #medical-education-unique-wrapper .med-faculty-list li:hover {
+            color: #ffffff;
+            padding-left: 40px;
+        }
+
+        #medical-education-unique-wrapper .med-exam-prep {
+            transform: translateX(50px);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        #medical-education-unique-wrapper .med-section.animate .med-exam-prep {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        #medical-education-unique-wrapper .med-exam-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        #medical-education-unique-wrapper .med-exam-badge {
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid #00d4ff;
+            border-radius: 15px;
+            padding: 18px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform: rotateY(90deg);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        #medical-education-unique-wrapper .med-section.animate .med-exam-badge {
+            transform: rotateY(0deg);
+            opacity: 1;
+        }
+
+        #medical-education-unique-wrapper .med-exam-badge:nth-child(1) { transition-delay: 0.3s; }
+        #medical-education-unique-wrapper .med-exam-badge:nth-child(2) { transition-delay: 0.5s; }
+
+        #medical-education-unique-wrapper .med-exam-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            animation: med-rotate 4s linear infinite;
+            opacity: 0;
+        }
+
+        #medical-education-unique-wrapper .med-exam-badge:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes med-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #medical-education-unique-wrapper .med-exam-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #00d4ff;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #medical-education-unique-wrapper .med-exam-subtitle {
+            color: #8892b0;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        #medical-education-unique-wrapper .med-exam-logo {
+            width: 38px;
+            height: 38px;
+            margin: 0 auto 8px;
+            display: block;
+            position: relative;
+            z-index: 1;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #medical-education-unique-wrapper .med-section-title {
+                font-size: 2.5rem;
+            }
+
+            #medical-education-unique-wrapper .med-clinical-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            #medical-education-unique-wrapper .med-faculty-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            #medical-education-unique-wrapper .med-faculty-title {
+                font-size: 2.2rem;
+            }
+
+            #medical-education-unique-wrapper .med-exam-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Floating Animation */
+        @keyframes med-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #medical-education-unique-wrapper .med-clinical-card:hover {
+            animation: med-float 2s ease-in-out infinite;
+        }
+    </style>
+
+    <div id="medical-education-unique-container">
+        <!-- Clinical Training Excellence Section -->
+        <div class="med-section med-clinical-section">
+            <div class="med-section-header">
+                <h1 class="med-section-title">Clinical Training Excellence</h1>
+                <p class="med-section-subtitle">Comprehensive hands-on medical education from day one</p>
+            </div>
+            
+            <div class="med-clinical-grid">
+                <div class="med-clinical-card">
+                    <span class="med-card-icon">🏥</span>
+                    <h3 class="med-card-title">Practical Exposure</h3>
+                    <p class="med-card-description">Immersive clinical experience from early years, ensuring students develop practical skills alongside theoretical knowledge through real patient interactions.</p>
+                </div>
+                
+                <div class="med-clinical-card">
+                    <span class="med-card-icon">🔄</span>
+                    <h3 class="med-card-title">Rotational Internships</h3>
+                    <p class="med-card-description">Comprehensive rotational clinical internships across multiple specialties, providing diverse exposure and specialized training in various medical fields.</p>
+                </div>
+                
+                <div class="med-clinical-card">
+                    <span class="med-card-icon">🏛️</span>
+                    <h3 class="med-card-title">Partner Hospitals</h3>
+                    <p class="med-card-description">Strategic partnerships with leading university and partner hospitals, offering state-of-the-art facilities and cutting-edge medical technology.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Faculty & Exam Preparation Section -->
+        <div class="med-section med-faculty-section">
+            <div class="med-section-header">
+                <h1 class="med-section-title">Faculty & Exam Preparation</h1>
+                <p class="med-section-subtitle">Expert guidance and comprehensive exam preparation</p>
+            </div>
+            
+            <div class="med-faculty-container">
+                <div class="med-faculty-content">
+                    <h2 class="med-faculty-title">Expert Faculty Support</h2>
+                    <ul class="med-faculty-list">
+                        <li style="--i: 1;">Indian Faculty Support</li>
+                        <li style="--i: 2;">Experienced Medical Professionals</li>
+                        <li style="--i: 3;">Personalized Mentorship Programs</li>
+                        <li style="--i: 4;">Continuous Academic Guidance</li>
+                    </ul>
+                </div>
+                
+                <div class="med-exam-prep">
+                    <div class="med-exam-badges">
+                        <div class="med-exam-badge">
+                            <img src="https://natboard.edu.in/image/nbe-logo.png" alt="NBEMS Logo" class="med-exam-logo" onerror="this.style.display='none'">
+                            <h3 class="med-exam-title"><strong>NEXT</strong></h3>
+                            <p class="med-exam-subtitle">National Exit Test Preparation</p>
+                        </div>
+                        
+                        <div class="med-exam-badge">
+                            <img src="https://natboard.edu.in/image/nbe-logo.png" alt="NBEMS Logo" class="med-exam-logo" onerror="this.style.display='none'">
+                            <h3 class="med-exam-title"><strong>FMGE</strong></h3>
+                            <p class="med-exam-subtitle">Foreign Medical Graduate Examination</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Intersection Observer for scroll animations
+            const medObserverOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const medObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, medObserverOptions);
+
+            // Observe all sections
+            document.querySelectorAll('#medical-education-unique-wrapper .med-section').forEach(section => {
+                medObserver.observe(section);
+            });
+
+            // Add stagger animation to list items
+            const medListItems = document.querySelectorAll('#medical-education-unique-wrapper .med-faculty-list li');
+            medListItems.forEach((item, index) => {
+                item.style.setProperty('--i', index + 1);
+            });
+
+            // Smooth scroll effect
+            let medScrollHandler = () => {
+                const scrolled = window.pageYOffset;
+                const medSections = document.querySelectorAll('#medical-education-unique-wrapper .med-section');
+                
+                medSections.forEach((section, index) => {
+                    const rate = scrolled * -0.5;
+                    section.style.transform = `translateY(${rate * 0.1}px)`;
+                });
+            };
+
+            window.addEventListener('scroll', medScrollHandler);
+        })();
+    </script>
+</div>
+           
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animation observer
+            const animateElements = (elements, className) => {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add(className);
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                elements.forEach(el => observer.observe(el));
+            };
+
+            // Animate header elements
+            animateElements([document.querySelector('.program-header')], 'animate-in');
+            
+            // Animate cards with staggered delay
+            const cards = document.querySelectorAll('.info-card');
+            cards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 100}ms`;
+            });
+            animateElements(cards, 'animate-in');
+            
+            // Animate sections
+            const sections = document.querySelectorAll('.curriculum-section, .clinical-training, .faculty-section');
+            animateElements(sections, 'animate-in');
+
+            // Card hover effects
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-10px)';
+                    card.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.15)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                    card.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.08)';
+                });
+            });
+
+            // Phase item hover effects
+            document.querySelectorAll('.phase-item').forEach(phase => {
+                phase.addEventListener('mouseenter', () => {
+                    phase.style.transform = 'translate(-50%, -5px) scale(1.05)';
+                });
+                
+                phase.addEventListener('mouseleave', () => {
+                    if (phase.classList.contains('pre-clinical') || phase.classList.contains('clinical')) {
+                        phase.style.transform = 'translateX(-50%)';
+                    } else {
+                        phase.style.transform = 'translateY(-50%)';
+                    }
+                });
+            });
+
+            // Exam badge hover effects
+            document.querySelectorAll('.exam-badge').forEach(badge => {
+                badge.addEventListener('mouseenter', () => {
+                    badge.style.transform = 'translateY(-5px)';
+                });
+                
+                badge.addEventListener('mouseleave', () => {
+                    badge.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Logo item hover effects
+            document.querySelectorAll('.logo-item').forEach(logo => {
+                logo.addEventListener('mouseenter', () => {
+                    logo.style.transform = 'translateY(-3px)';
+                });
+                
+                logo.addEventListener('mouseleave', () => {
+                    logo.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Month pill hover effects
+            document.querySelectorAll('.month-pill').forEach(pill => {
+                pill.addEventListener('mouseenter', () => {
+                    pill.style.transform = 'translateY(-3px)';
+                });
+                
+                pill.addEventListener('mouseleave', () => {
+                    pill.style.transform = 'translateY(0)';
+                });
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const intakeCard = document.querySelector('.intake-card-round');
+            
+            if (intakeCard) {
+                intakeCard.addEventListener('mouseenter', () => {
+                    const pills = document.querySelectorAll('.month-pill-round');
+                    pills.forEach((pill, index) => {
+                        pill.style.transitionDelay = `${index * 100}ms`;
+                        pill.style.transform = 'translateY(0) scale(1)';
+                    });
+                });
+                
+                intakeCard.addEventListener('mouseleave', () => {
+                    const pills = document.querySelectorAll('.month-pill-round');
+                    pills.forEach((pill, index) => {
+                        if (index % 2 === 0) {
+                            pill.style.transform = 'translateX(-10px) scale(0.95)';
+                        } else {
+                            pill.style.transform = 'translateX(10px) scale(0.95)';
+                        }
+                    });
+                });
+                
+                // Initial state
+                const pills = document.querySelectorAll('.month-pill-round');
+                pills.forEach((pill, index) => {
+                    if (index % 2 === 0) {
+                        pill.style.transform = 'translateX(-10px) scale(0.95)';
+                    } else {
+                        pill.style.transform = 'translateX(10px) scale(0.95)';
+                    }
+                });
+            }
+        });
+
+
+               // This ensures animations play when the element is in view
+               document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.visibility = 'visible';
+                    }
+                });
+            }, {threshold: 0.1});
+
+            document.querySelectorAll('.med-fade-in').forEach(el => {
+                el.style.visibility = 'hidden';
+                observer.observe(el);
+            });
+        });
+
+            // This ensures animations play when the element is in view
+            document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.visibility = 'visible';
+                    }
+                });
+            }, {threshold: 0.1});
+
+            document.querySelectorAll('.med-fade-in').forEach(el => {
+                el.style.visibility = 'hidden';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
